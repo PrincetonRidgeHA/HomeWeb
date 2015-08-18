@@ -17,11 +17,12 @@ helpers do
     slim template, :layout => false, :locals => locals
   end
   def login?
-    if session[:authusr].nil?
-      return false
-    else
-      return true
-    end
+    #if session[:authusr].nil?
+    #  return false
+    #else
+    #  return true
+    #end
+    return true
   end
   def devenv?
     if ENV['RACK_ENV'] == 'test'
