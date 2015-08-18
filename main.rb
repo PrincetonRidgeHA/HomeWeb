@@ -37,3 +37,12 @@ get '/' do
   @PageTitle = "Home"
   slim :home
 end
+get '/secured' do
+  redirect '/login' unless login?
+  redirect '/secured/home'
+end
+get '/secured/home' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+  @PageTitle = "Dashboard Home"
+end
