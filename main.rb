@@ -38,6 +38,11 @@ get '/' do
   slim :home
 end
 get '/login' do
+  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+  @PageTitle = "Sign in"
+  slim :login
+end
+post '/login' do
   if(params[:inputPassword] == 'test')
     session[:authuser] = true
     redirect '/secured'
