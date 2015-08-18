@@ -22,28 +22,7 @@
   </head>
 
   <body>
-
-    <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/secure/dir">Secure</a></li>
-            <li role="presentation"><a href="/about">About</a></li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">PRHA</h3>
-      </div>
-
-      == yield
-      <footer class="footer">
-        <p>Copyright &copy; 2015 - Princeton Ridge Homeowners Association &middot; Developed by <a href="http://github.com/ARMmaster17">Joshua Zenn</a></p>
-        <p>Version: #{@TRAVISBUILDNUMBER}</p>
-      </footer>
-
-    </div> <!-- /container -->
-
-
+    == yield
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
