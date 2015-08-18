@@ -44,7 +44,7 @@ get '/login' do
 end
 post '/login' do
   if(params[:inputPassword] == 'test')
-    session[:authuser] = true
+    session[:authusr] = true
     redirect '/secured'
   else
     @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
