@@ -37,12 +37,27 @@ get '/' do
   @PageTitle = "Home"
   slim :home
 end
+get '/login' do
+  if(params[:inputPassword] == 'test')
+    session[:authuser] = true
+    redirect '/secured'
+  else
+    @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+    @PageTitle = "Sign in"
+    slim :login
+  end
+end
+get '/secured/:page' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+  if(params[:page] == 'home')
+    @PageTitle = "Home - Residents Dashboard"
+    slim :membershome
+  else
+    redirect '/secured'
+  end
+end
 get '/secured' do
   redirect '/login' unless login?
   redirect '/secured/home'
-end
-get '/secured/home' do
-  redirect '/login' unless login?
-  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
-  @PageTitle = "Dashboard Home"
 end
