@@ -6,6 +6,7 @@ require 'rest-client'
 require 'json'
 require_relative 'inc/builddata'
 require_relative 'inc/pagevars'
+require_relative 'inc/mailer'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
@@ -37,6 +38,13 @@ get '/' do
   @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
   @PageTitle = "Home"
   slim :home
+end
+get '/contact' do
+  slim :error
+end
+post '/contact' do
+  Mailer.send(Pagevars.setVars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
+  redirect '/'
 end
 get '/login' do
   @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
