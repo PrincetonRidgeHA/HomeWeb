@@ -1,11 +1,12 @@
 require_once 'pony'
+require_relative 'pagevars'
 
 module Mailer
-  def send(String sender, String to, String subject, String body)
+  def send(String to, String subject, String body)
     Pony.mail({
-      :from => sender,
+      :from => Pagevars.setVars("ADMINMAIL"),
       :to => to,
-      :subject => "AUTO: PRHA bug report",
+      :subject => subject,
       :body => body
     })
   end
