@@ -1,4 +1,4 @@
-require_once 'pony'
+require 'pony'
 require_relative 'pagevars'
 
 module Mailer
