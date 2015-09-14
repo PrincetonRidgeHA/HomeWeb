@@ -62,7 +62,7 @@ post '/login' do
     slim :login
   end
 end
-get '/test/:key/processing'
+get '/test/:key/processing' do
   if(params[:key] == 'PRHAKEY')
     slim :processing
   else
