@@ -2,7 +2,7 @@ require_once 'pony'
 require_relative 'pagevars'
 
 module Mailer
-  def send(String to, String subject, String body)
+  def send(to, subject, body)
     Pony.mail({
       :from => Pagevars.setVars("ADMINMAIL"),
       :to => to,
