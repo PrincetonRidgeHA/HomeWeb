@@ -43,6 +43,7 @@ get '/contact' do
   slim :error
 end
 post '/contact' do
+  slim :processing
   Mailer.send(Pagevars.setVars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
   redirect '/'
 end
@@ -59,6 +60,13 @@ post '/login' do
     @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
     @PageTitle = "Sign in"
     slim :login
+  end
+end
+get '/test/:key/processing'
+  if(params[:key] == 'PRHAKEY')
+    slim :processing
+  else
+    slim :error
   end
 end
 get '/secured/:page' do
