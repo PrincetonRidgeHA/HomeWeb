@@ -8,5 +8,6 @@ gem 'sinatra'
 gem 'slim'
 gem 'rest-client'
 gem 'json'
+gem 'pony'
 gem "rack-test"
 gem "codeclimate-test-reporter", group: :test, require: nil
