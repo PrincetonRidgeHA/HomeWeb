@@ -6,7 +6,7 @@ module Pagevars
   end
   def Pagevars.setVars(vname)
     if vname == "CIbuild"
-      return Builddata.getCIstring()
+      return Builddata.CIgetBuild()
     elsif vname == "ADMINMAIL"
       return "wordman05@gmail.com"
     elsif vname == "ADMINNAME"
