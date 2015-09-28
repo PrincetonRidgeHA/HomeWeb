@@ -1,8 +1,11 @@
 class CreateModel < ActiveRecord::Migration
   def up
   	create_table :residents do |t|
-  		t.string :lname
+  		t.string :name
   		t.string :addr
+  		t.string :email
+  		t.string :pnum
+  		
   	end
   end
 
