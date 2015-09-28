@@ -1,6 +1,10 @@
 module Pagevars
   begin
-    require_relative 'builddata'
+    if ENV['env'] == 'production'
+      require_relative 'inc/builddata'
+    else
+      require_relative '../builddata.partial'
+    end
   rescue
     raise "Missing builddata file"
   end

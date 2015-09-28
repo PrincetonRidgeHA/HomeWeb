@@ -11,3 +11,6 @@ gem 'json'
 gem 'pony'
 gem "rack-test"
 gem "codeclimate-test-reporter", group: :test, require: nil
+gem "activerecord"
+gem "sinatra-activerecord"
+gem "pg"

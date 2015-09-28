@@ -22,6 +22,8 @@ addons:
     packages:
 install:
   - bundle install
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - echo 'Configuring JIT variables...'
   - sed 's/TRAVISCOMMIT/'$TRAVIS_COMMIT'/' builddata.partial.rb > builddata.partial2.rb
@@ -33,3 +35,4 @@ deploy:
   api_key: "9951e24c-b489-48fe-8a60-b325e8d850dd"
   app: princetonridgeha
   skip_cleanup: true
+  run: "rake db:migrate"
