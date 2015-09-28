@@ -70,11 +70,31 @@ get '/test/:key/processing' do
     slim :error
   end
 end
+get '/test/:key/dbinsert/resident' do
+  if(params[:key] == 'PRHAKEY')
+    slim :test_dbinsert_resident
+  else
+    slim :error
+  end
+end
+post '/test/:key/dbinsert/resident' do
+  if(params[:key] == 'PRHAKEY')
+    @residents = Residents.new(params[:residents])
+	  if @residents.save
+		  slim :test_dbinsert_resident
+	  else
+		  "Sorry, there was an error!"
+	  end
+  else
+    slim :error
+  end
+end
 get '/secured/:page' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
+    @items = Resident.all
     slim :membershome
   else
     redirect '/secured'
