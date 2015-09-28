@@ -22,6 +22,8 @@ addons:
     packages:
 install:
   - bundle install
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - echo 'Configuring JIT variables...'
   - sed 's/TRAVISCOMMIT/'$TRAVIS_COMMIT'/' builddata.partial.rb > builddata.partial2.rb
