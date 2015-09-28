@@ -7,7 +7,7 @@ configure do
 	end
 
 	ActiveRecord::Base.establish_connection(
-			:adapter => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
+			:adapter  => 'postgres',
 			:host     => db.host,
 			:username => db.user,
 			:password => db.password,
