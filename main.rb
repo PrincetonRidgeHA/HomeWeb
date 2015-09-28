@@ -6,6 +6,7 @@ require 'rest-client'
 require 'json'
 require 'sinatra/activerecord'
 require './config/environments'
+require './models/residents.rb'
 require_relative 'inc/pagevars'
 require_relative 'inc/mailer'
 
