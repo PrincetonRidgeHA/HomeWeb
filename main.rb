@@ -94,6 +94,7 @@ get '/secured/:page' do
   @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
+    @items = Resident.all
     slim :membershome
   else
     redirect '/secured'
