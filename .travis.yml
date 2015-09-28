@@ -33,3 +33,4 @@ deploy:
   api_key: "9951e24c-b489-48fe-8a60-b325e8d850dd"
   app: princetonridgeha
   skip_cleanup: true
+  run: "rake db:migrate"
