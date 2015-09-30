@@ -45,14 +45,17 @@ get '/' do
   slim :home
 end
 get '/contact' do
+  @notif = Notifications.getAll()
   slim :error
 end
 post '/contact' do
+  @notif = Notifications.getAll()
   slim :processing
   Mailer.send(Pagevars.setVars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
   redirect '/'
 end
 get '/login' do
+  @notif = Notifications.getAll()
   @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
   @PageTitle = "Sign in"
   slim :login
@@ -68,6 +71,7 @@ post '/login' do
   end
 end
 get '/test/:key/processing' do
+  @notif = Notifications.getAll()
   if(params[:key] == 'PRHAKEY')
     slim :processing
   else
@@ -75,6 +79,7 @@ get '/test/:key/processing' do
   end
 end
 get '/test/:key/dbinsert/resident' do
+  @notif = Notifications.getAll()
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_resident
   else
@@ -82,6 +87,7 @@ get '/test/:key/dbinsert/resident' do
   end
 end
 post '/test/:key/dbinsert/resident' do
+  @notif = Notifications.getAll()
   if(params[:key] == 'PRHAKEY')
     @residents = Residents.new(params[:residents])
 	  if @residents.save
