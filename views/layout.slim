@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link href="toastr.css" rel="stylesheet"/>
+    <script src="toastr.js"></script>
     <link rel="stylesheet" href="/src/css/global.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -21,12 +23,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
-    <div class="alert alert-info">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <strong>Heads up!</strong> This site is a work in progress. Some things may not work the way they should.
-    </div>
+  <script>
+    toastr.["#{t.type}"]('#{t.msg}');
+  </script>
+    
     == yield
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
