@@ -1,5 +1,5 @@
 module Notifications
-  def getAll(to, subject, body)
+  def Notifications.getAll()
     rVal = Array.new
     counter = 0;
     rVal[counter] = "Heads up! This site is a work in progess. Some things might not work the way they should."
