@@ -40,6 +40,7 @@ end
 get '/' do
   @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
   @PageTitle = "Home"
+  @notif = Notifications.getAll()
   slim :home
 end
 get '/contact' do
@@ -97,6 +98,7 @@ get '/secured/:page' do
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
     @items = Residents.all
+    @notif = Notifications.getAll()
     slim :membershome
   else
     redirect '/secured'
