@@ -1,9 +1,8 @@
 module Notifications
   def Notifications.getAll()
     rVal = Array.new
-    counter = 0;
-    rVal[counter] = "Heads up! This site is a work in progess. Some things might not work the way they should."
-    counter++
+    rVal.push("Heads up! This site is a work in progess. Some things might not work the way they should.")
+    rVal.push("HEROKU: This build is on ring DEV-PUB, which is marked as unstable.")
     # Insert other global notifications here
     return rVal
   end
