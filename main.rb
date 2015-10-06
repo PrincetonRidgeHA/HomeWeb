@@ -44,6 +44,18 @@ get '/' do
   @notif = Notifications.getAll()
   slim :home
 end
+get '/api/v1/get/:region/:item/:dtype' do
+	if params[:region] == 'yom'
+		if params[:item] == 'current'
+			if params[:dtype] == 'imgpath'
+				# Output the path to the image
+				"http://princetonridge.com/Entry.JPG"
+			end
+		else
+			# Read format using MM-YYYY
+		end
+	end
+end
 get '/contact' do
   @notif = Notifications.getAll()
   slim :error
