@@ -16,6 +16,7 @@
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
                 </ol>
 
                 <!-- Wrapper for slides -->
@@ -35,6 +36,12 @@
                             <button type="button" class="btn btn-primary">Take the tour >></button>
                         </div>
                     </div>
+                    <div id="my_img_div" class="item">
+                        <div class="carousel-caption">
+                            <h3>Yard of the Month</h3>
+                            <p>Visit the members area to see the current Yard of the Month.</p>
+                        </div>
+                    </div>
                     
                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -47,6 +54,8 @@
                 </div>
             </div>
         </div>
+
+      <script>$.ajax({url: "http://princetonridge.herokuapp.com/api/v1/get/yom/current/imgpath"}).then(function(data) {$('#my_img_div').prepend('<img id="daily_img" src="' + data + '" />');});});</script>
 
         <div class="row marketing">
           <div class="col-lg-6">
