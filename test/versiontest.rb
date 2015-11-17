@@ -12,4 +12,19 @@ class TestVersion < Test::Unit::TestCase
     get '/'
     assert last_response.ok?
   end
+  def test_contactpage
+    get '/contact'
+    assert last_response.ok?
+  end
+  def test_loginpage
+    get '/login'
+    assert last_response.ok?
+  end
+  def test_loginservice
+    post '/login' {'inputPassword' => 'test'}
+  end
+  def test_api_endpoint_yom
+    get '/api/v1/get/yom/current/imagepath'
+    assert last_response.ok?
+  end
 end
