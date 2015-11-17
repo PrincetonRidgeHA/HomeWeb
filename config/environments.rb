@@ -1,4 +1,4 @@
-#configure :production, :development, :test do
+# configure :production, :development, :test do
 configure do
 	if(ENV['DATABASE_URL'])
 		db = URI.parse(ENV['DATABASE_URL'])

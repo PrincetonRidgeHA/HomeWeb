@@ -1,11 +1,11 @@
 module Builddata
-  def Builddata.CIgetcommit()
+  def Builddata.ci_get_commit()
     return 'TRAVISCOMMIT'
   end
-  def Builddata.CIgetbuild()
+  def Builddata.ci_get_build()
     return 'TRAVISBUILD'
   end
   def Builddata.getCIstring()
-    return CIgetbuild() + '/' + CIgetcommit()
+    return ci_get_build() + '/' + ci_get_commit()
   end
 end

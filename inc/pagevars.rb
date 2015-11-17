@@ -8,9 +8,9 @@ module Pagevars
   rescue
     raise "Missing builddata file"
   end
-  def Pagevars.setVars(vname)
+  def Pagevars.set_vars(vname)
     if vname == "CIbuild"
-      return Builddata.CIgetbuild()
+      return Builddata.ci_get_build()
     elsif vname == "ADMINMAIL"
       return "wordman05@gmail.com"
     elsif vname == "ADMINNAME"

@@ -38,9 +38,9 @@ helpers do
 end
 
 get '/' do
-  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Home"
-  @notif = Notifications.getAll()
+  @notif = Notifications.get_all()
   slim :home
 end
 get '/api/v1/get/:region/:item/:dtype' do
@@ -56,18 +56,18 @@ get '/api/v1/get/:region/:item/:dtype' do
 	end
 end
 get '/contact' do
-  @notif = Notifications.getAll()
+  @notif = Notifications.get_all()
   slim :error
 end
 post '/contact' do
-  @notif = Notifications.getAll()
+  @notif = Notifications.get_all()
   slim :processing
-  Mailer.send(Pagevars.setVars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
+  Mailer.send(Pagevars.set_vars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
   redirect '/'
 end
 get '/login' do
-  @notif = Notifications.getAll()
-  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
   slim :login
 end
@@ -76,13 +76,13 @@ post '/login' do
     session[:authusr] = true
     redirect '/secured'
   else
-    @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+    @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
     @PageTitle = "Sign in"
     slim :login
   end
 end
 get '/test/:key/processing' do
-  @notif = Notifications.getAll()
+  @notif = Notifications.get_all()
   if(params[:key] == 'PRHAKEY')
     slim :processing
   else
@@ -90,7 +90,7 @@ get '/test/:key/processing' do
   end
 end
 get '/test/:key/dbinsert/resident' do
-  @notif = Notifications.getAll()
+  @notif = Notifications.get_all()
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_resident
   else
@@ -98,7 +98,7 @@ get '/test/:key/dbinsert/resident' do
   end
 end
 post '/test/:key/dbinsert/resident' do
-  @notif = Notifications.getAll()
+  @notif = Notifications.get_all()
   if(params[:key] == 'PRHAKEY')
     @residents = Residents.new(params[:residents])
 	  if @residents.save
@@ -112,11 +112,11 @@ post '/test/:key/dbinsert/resident' do
 end
 get '/secured/:page' do
   redirect '/login' unless login?
-  @TRAVISBUILDNUMBER = Pagevars.setVars("CIbuild")
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
     @items = Residents.all
-    @notif = Notifications.getAll()
+    @notif = Notifications.get_all()
     slim :membershome
   else
     redirect '/secured'
