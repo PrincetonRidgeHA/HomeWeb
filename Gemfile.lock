@@ -16,8 +16,9 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.3)
     builder (3.2.2)
-    codeclimate-test-reporter (0.4.8)
-      simplecov (>= 0.7.1, < 1.0.0)
+    codacy-coverage (0.2.3)
+      rest-client (~> 1.8)
+      simplecov (~> 0.10.0)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -72,7 +73,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  codeclimate-test-reporter
+  codacy-coverage
   json
   pg
   pony
