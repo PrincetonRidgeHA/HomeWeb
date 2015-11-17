@@ -57,7 +57,7 @@ get '/api/v1/get/:region/:item/:dtype' do
 end
 get '/contact' do
   @notif = Notifications.get_all()
-  slim :error
+  slim :bugreport
 end
 post '/contact' do
   @notif = Notifications.get_all()
