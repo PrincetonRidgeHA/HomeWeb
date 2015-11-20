@@ -103,13 +103,22 @@ end
 post '/test/:key/dbinsert/resident' do
   @notif = Notifications.get_all()
   if(params[:key] == 'PRHAKEY')
-    params[:residents]['id'] = '0'
-    @residents = Residents.new(params[:residents])
-	  if @residents.save
-		  slim :test_dbinsert_resident
-	  else
-		  "Sorry, there was an error!"
-	  end
+    idct = 0;
+    while(true)
+      params[:residents]['id'] = idct;
+      if(idct <= 100)
+        slim :error
+        break
+      end
+      begin
+        @residents = Residents.new(params[:residents])
+	      @residents.save
+	      break
+      rescue
+        idct = idct + 1;
+      end
+    end
+    slim :test_dbinsert_resident
   else
     slim :error
   end
