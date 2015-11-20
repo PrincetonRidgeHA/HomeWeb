@@ -72,6 +72,9 @@ get '/login' do
   slim :login
 end
 post '/login' do
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Sign in"
   if(params[:inputPassword] == 'test')
     session[:authusr] = true
     redirect '/secured'
