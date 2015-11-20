@@ -48,7 +48,7 @@ get '/api/v1/get/:region/:item/:dtype' do
 		if params[:item] == 'current'
 			if params[:dtype] == 'imgpath'
 				# Output the path to the image
-				"http://princetonridge.com/Entry.JPG"
+				out << "http://princetonridge.com/Entry.JPG"
 			end
 		else
 			# Read format using MM-YYYY
