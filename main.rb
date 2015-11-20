@@ -102,7 +102,7 @@ get '/test/:key/dbinsert/resident' do
 end
 post '/test/:key/dbinsert/resident' do
   @notif = Notifications.get_all()
-  if(params[:key] == 'PRHAKEY')
+  if(params[:key] == ENV['ADMIN_PWD'])
     idct = 0;
     while(true)
       params[:residents]['id'] = idct;
