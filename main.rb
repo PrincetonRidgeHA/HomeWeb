@@ -103,11 +103,8 @@ end
 post '/test/:key/dbinsert/resident' do
   @notif = Notifications.get_all()
   if(params[:key] == 'PRHAKEY')
-    @residents = Residents.new(0, 
-      params[:residents]['name'],
-      params[:residents]['addr'],
-      params[:residents]['email'],
-      params[:residents]['pnum'])
+    params[:residents]['id'] = '0'
+    @residents = Residents.new(params[:residents])
 	  if @residents.save
 		  slim :test_dbinsert_resident
 	  else
