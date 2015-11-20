@@ -106,7 +106,7 @@ post '/test/:key/dbinsert/resident' do
     idct = 0;
     while(true)
       params[:residents]['id'] = idct;
-      if(idct <= 100)
+      if(idct >= 100)
         slim :error
         break
       end
