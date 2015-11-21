@@ -74,44 +74,59 @@ get '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
-  slim :login
+  if(session[:authtries] == nil)
+    session[:authtries] = 0
+    slim :login
+  elsif(session[:authtries] <= 3)
+    slim :login
+  else
+    @errdetail = '0x1'
+    slim :error
+  end
 end
 post '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
-  if(params[:inputPassword] == 'test')
+  # if(params[:key] == ENV['ADMIN_PWD'])
+  if(params[:key] == 'PRHA15&#%')
     session[:authusr] = true
     redirect '/secured'
   else
     @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
     @PageTitle = "Sign in"
-    slim :login
-  end
-end
-get '/test/:key/processing' do
-  @notif = Notifications.get_all()
-  if(params[:key] == 'PRHAKEY')
-    slim :processing
-  else
-    slim :error
+    session[:authtries] = session[:authtries] + 1
+    if(session[:authtries] == nil)
+      session[:authtries] = 0
+      slim :login
+    elsif(session[:authtries] <= 3)
+      slim :login
+    else
+      @errdetail = '0x1'
+      slim :error
+    end
   end
 end
 get '/test/:key/dbinsert/resident' do
+  redirect '/login' unless login?
   @notif = Notifications.get_all()
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_resident
   else
+    @errdetail = '0x3'
     slim :error
   end
 end
 post '/test/:key/dbinsert/resident' do
+  redirect '/login' unless login?
   @notif = Notifications.get_all()
-  if(params[:key] == ENV['ADMIN_PWD'])
+  # if(params[:key] == ENV['ADMIN_PWD'])
+  if(params[:key] == 'PRHA15&#%')
     idct = 0;
     while(true)
       params[:residents]['id'] = idct;
-      if(idct >= 100)
+      if(idct >= 1000)
+        @errdetail = '0x2'
         slim :error
         break
       end
@@ -125,6 +140,7 @@ post '/test/:key/dbinsert/resident' do
     end
     slim :test_dbinsert_resident
   else
+    @errdetail = '0x2'
     slim :error
   end
 end
