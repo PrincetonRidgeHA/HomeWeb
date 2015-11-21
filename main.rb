@@ -88,8 +88,7 @@ post '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
-  # if(params[:key] == ENV['ADMIN_PWD'])
-  if(params[:key] == 'PRHA15&#%')
+  if(params[:inputPassword] == ENV['ADMIN_PWD'])
     session[:authusr] = true
     redirect '/secured'
   else
@@ -105,6 +104,14 @@ post '/login' do
       @errdetail = '0x1'
       slim :error
     end
+  end
+end
+get '/test/:key/resetauth' do
+  if(params[:key] == 'PRHAKEY')
+    session[:authtries] = 0
+    redirect '/'
+  else
+    redirect '/'
   end
 end
 get '/test/:key/dbinsert/resident' do
