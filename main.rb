@@ -41,6 +41,7 @@ get '/' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Home"
   @notif = Notifications.get_all()
+  @bcolor = "#5a5a5a"
   @yom_image = "http://princetonridge.com/Entry.JPG"
   @yom_name = "Not Announced"
   @yom_addr_short = "1000 Street Rd. NE"
