@@ -41,6 +41,10 @@ get '/' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Home"
   @notif = Notifications.get_all()
+  @yom_image = "http://princetonridge.com/Entry.JPG"
+  @yom_name = "Not Announced"
+  @yom_addr_short = "1000 Street Rd. NE"
+  @yom_month = "November"
   slim :home
 end
 get '/api/v1/get/:region/:item/:dtype' do
