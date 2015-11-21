@@ -43,6 +43,7 @@ get '/' do
   @notif = Notifications.get_all()
   @yom_image = "http://princetonridge.com/Entry.JPG"
   @yom_name = "Not Announced"
+  @yom_addr_short = "1000 Street Rd. NE"
   @yom_month = "November"
   slim :home
 end
