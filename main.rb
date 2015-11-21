@@ -95,11 +95,11 @@ post '/login' do
   else
     @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
     @PageTitle = "Sign in"
-    session[:authtries] = session[:authtries] + 1
     if(session[:authtries] == nil)
-      session[:authtries] = 0
+      session[:authtries] = 1
       slim :login
     elsif(session[:authtries] <= 3)
+      session[:authtries] = session[:authtries] + 1
       slim :login
     else
       @errdetail = '0x1'
