@@ -1,12 +1,14 @@
 development:
   adapter: postgresql
-  database: development
-  username: <%= ENV['PG_USER'] %>
-  password: <%= ENV['PG_PASS'] %>
-  host: localhost
+  database: ddbvvogf4fjltn
+  username: zozzuejiukpbns
+  password: nbyuQqfpXvlFb178HXvqaDTuPP
+  host: ec2-54-163-228-188.compute-1.amazonaws.com
 test:
   adapter: postgresql
-  database: travis_ci_test
-  username: postgres
+  database: ddbvvogf4fjltn
+  username: zozzuejiukpbns
+  password: nbyuQqfpXvlFb178HXvqaDTuPP
+  host: ec2-54-163-228-188.compute-1.amazonaws.com
 production:
   adapter: postgresql

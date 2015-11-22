@@ -12,7 +12,9 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/">Home</a></li>
-            <li><a href="/secured/home">Members</a></li>
+            <li><a href="/secured/members/residents">Members</a></li>
+            <li><a href="/secured/members/docs">Documents</a></li>
+            <li><a href="/secured/members/yom">Yard of the Month</a></li>
             <li><a href="#">Help</a></li>
           </ul>
           <!--<form class="navbar-form navbar-right">
@@ -24,26 +26,16 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Resident list <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Documents</a></li>
-            <li><a href="#">Yard of the Month</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
-          <h2 class="sub-header">Resident list</h2>
+        <div class="col-sm-12">
+          <h1 class="page-header">Documents</h1>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Name(s)</th>
-                  <th>Address</th>
-                  <th>Email</th>
-                  <th>Phone number</th>
+                  <th>Document Name</th>
+                  <th>Upload Date</th>
+                  <th>Uploaded By</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,13 +45,13 @@
                       =item.name
                     </td>
                     <td>
-                      =item.addr
+                      =item.uploaddate
                     </td>
                     <td>
-                      <a href="mailto:#{item.email}">#{item.email}</a>
+                      =item.uploadedby
                     </td>
                     <td>
-                      =item.pnum
+                      <a href="#{item.url}">Download >></a>
                     </td>
                   </tr>
               </tbody>

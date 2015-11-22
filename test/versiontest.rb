@@ -23,8 +23,4 @@ class TestVersion < Test::Unit::TestCase
   def test_loginservice
     post '/login', 'inputPassword' => 'test'
   end
-  def test_api_endpoint_yom
-    get '/api/v1/get/yom/current/imagepath'
-    assert last_response.ok?
-  end
 end

@@ -9,8 +9,10 @@ require './config/environments'
 require './inc/notifications'
 require './models/residents.rb'
 require './models/docs.rb'
+require './models/yard_winners.rb'
 require_relative 'inc/pagevars'
 require_relative 'inc/mailer'
+require_relative 'inc/dateservice'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
@@ -42,23 +44,25 @@ get '/' do
   @PageTitle = "Home"
   @notif = Notifications.get_all()
   @bcolor = "#5a5a5a"
+  yom_max_year = 1990
+  yom_max_month = 0
   @yom_image = "http://princetonridge.com/Entry.JPG"
-  @yom_name = "Not Announced"
-  @yom_addr_short = "1000 Street Rd. NE"
-  @yom_month = "November"
+  # @yom_name = "Error"
+  # @yom_addr_short = "Error"
+  # @yom_month = "Error"
+  Yardwinners.all.each do |item|
+    if(item.year >= yom_max_year)
+      if(item.month >= yom_max_month)
+        yom_max_year = item.year
+        yom_max_month = item.month
+        @yom_image = item.imgpath unless item.imgpath == "#"
+        @yom_name = item.name
+        @yom_addr_short = item.address
+        @yom_month = Dateservice.get_month(item.month)
+      end
+    end
+  end
   slim :home
-end
-get '/api/v1/get/:region/:item/:dtype' do
-	if params[:region] == 'yom'
-		if params[:item] == 'current'
-			if params[:dtype] == 'imgpath'
-				# Output the path to the image
-				out << "http://princetonridge.com/Entry.JPG"
-			end
-		else
-			# Read format using MM-YYYY
-		end
-	end
 end
 get '/contact' do
   @notif = Notifications.get_all()
@@ -90,7 +94,7 @@ post '/login' do
   @PageTitle = "Sign in"
   if(params[:inputPassword] == ENV['ADMIN_PWD'])
     session[:authusr] = true
-    redirect '/secured'
+    redirect '/secured/members/home'
   else
     @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
     @PageTitle = "Sign in"
@@ -128,7 +132,7 @@ post '/test/:key/dbinsert/resident' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
   # if(params[:key] == ENV['ADMIN_PWD'])
-  if(params[:key] == 'PRHA15&#%')
+  if(params[:key] == 'PRHAKEY')
     idct = 0;
     while(true)
       params[:residents]['id'] = idct;
@@ -147,23 +151,66 @@ post '/test/:key/dbinsert/resident' do
     end
     slim :test_dbinsert_resident
   else
-    @errdetail = '0x2'
+    @errdetail = '0x3'
     slim :error
   end
 end
-get '/secured/:page' do
+get '/test/:key/dbinsert/yom' do
   redirect '/login' unless login?
-  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
-  if(params[:page] == 'home')
-    @PageTitle = "Home - Residents Dashboard"
-    @items = Residents.all
-    @notif = Notifications.get_all()
-    slim :membershome
+  @notif = Notifications.get_all()
+  if(params[:key] == 'PRHAKEY')
+    slim :test_dbinsert_yom
   else
-    redirect '/secured'
+    @errdetail = '0x3'
+    slim :error
   end
 end
-get '/secured' do
+post '/test/:key/dbinsert/yom' do
   redirect '/login' unless login?
-  redirect '/secured/home'
+  @notif = Notifications.get_all()
+  if(true)
+    idct = 0;
+    while(true)
+      params[:yardwinnerdata]['id'] = idct;
+      if(idct >= 1000)
+        @errdetail = '0x2'
+        slim :error
+        break
+      end
+      begin
+        @yomwinner = Yardwinners.new(params[:yardwinnerdata])
+	      @yomwinner.save
+	      break
+      rescue
+        idct = idct + 1;
+      end
+    end
+    slim :test_dbinsert_yom
+  else
+    @errdetail = '0x3'
+    slim :error
+  end
+end
+get '/secured/members/:page' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  if(params[:page] == 'home')
+    @PageTitle = "Home - Residents Dashboard"
+    slim :member_home
+  elsif(params[:page] == 'residents')
+    @PageTitle = "Directory - Residents Dashboard"
+    @items = Residents.all
+    slim :member_directory
+  elsif(params[:page] == 'docs')
+    @PageTitle = "Documents - Residents Dashboard"
+    @items = Docs.all
+    slim :member_docs
+  elsif(params[:page] == 'yom')
+    @PageTitle = "Yard of the Month - Residents Dashboard"
+    @items = Yardwinners.all
+    slim :member_yom
+  else
+    redirect '/secured/members/home'
+  end
 end
