@@ -51,8 +51,15 @@ get '/' do
   # @yom_addr_short = "Error"
   # @yom_month = "Error"
   Yardwinners.all.each do |item|
-    if(item.year >= yom_max_year)
-      if(item.month >= yom_max_month)
+    if(item.year > yom_max_year)
+      yom_max_year = item.year
+      yom_max_month = item.month
+      @yom_image = item.imgpath unless item.imgpath == "#"
+      @yom_name = item.name
+      @yom_addr_short = item.address
+      @yom_month = Dateservice.get_month(item.month)
+    elsif(item.year == yom_max_year)
+      if(item.month > yom_max_month)
         yom_max_year = item.year
         yom_max_month = item.month
         @yom_image = item.imgpath unless item.imgpath == "#"
