@@ -75,10 +75,12 @@ get '/' do
 end
 get '/contact' do
   @notif = Notifications.get_all()
+  @cssimport = Array.new
   slim :bugreport
 end
 post '/contact' do
   @notif = Notifications.get_all()
+  @cssimport = Array.new
   slim :processing
   Mailer.send(Pagevars.set_vars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
   redirect '/'
@@ -87,6 +89,7 @@ get '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
+  @cssimport = Array.new
   if(session[:authtries] == nil)
     session[:authtries] = 0
     slim :login
@@ -101,6 +104,7 @@ post '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
+  @cssimport = Array.new
   if(params[:inputPassword] == ENV['ADMIN_PWD'])
     session[:authusr] = true
     redirect '/secured/members/home'
@@ -130,6 +134,7 @@ end
 get '/test/:key/dbinsert/resident' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
+  @cssimport = Array.new
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_resident
   else
@@ -140,7 +145,7 @@ end
 post '/test/:key/dbinsert/resident' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
-  # if(params[:key] == ENV['ADMIN_PWD'])
+  @cssimport = Array.new
   if(params[:key] == 'PRHAKEY')
     idct = 0;
     while(true)
@@ -167,6 +172,7 @@ end
 get '/test/:key/dbinsert/yom' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
+  @cssimport = Array.new
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_yom
   else
@@ -177,7 +183,8 @@ end
 post '/test/:key/dbinsert/yom' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
-  if(true)
+  @cssimport = Array.new
+  if(params[:key] == 'PRHAKEY')
     idct = 0;
     while(true)
       params[:yardwinnerdata]['id'] = idct;
@@ -204,6 +211,7 @@ get '/secured/members/:page' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @notif = Notifications.get_all()
+  @cssimport = Array.new
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
     slim :member_home
