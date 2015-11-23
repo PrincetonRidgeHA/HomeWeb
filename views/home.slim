@@ -1,89 +1,147 @@
-<div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/secured/members/home">Secure</a></li>
-            <li role="presentation"><a href="/about">About</a></li>
+<!-- <div class="container"> -->
+<div class="navbar-wrapper">
+  <div class="container">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Princeton Ridge</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/secured/members/home">Secured</a></li>
+            <li><a href="#">About</a></li>
           </ul>
-        </nav>
-        <h3 class="text-muted">Princeton Ridge</h3>
+        </div>
       </div>
-      
-        <div class="jumbotron">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-pause="hover">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
+    </nav>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="http://princetonridge.com/Entry.JPG" alt="PRN_ENTRY">
-                        <div class="carousel-caption">
-                            <h3>Welcome to Princeton Ridge</h3>
-                            <p>Kennesaw GA</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="http://princetonridge.com/Entry.JPG" alt="PRN_ENTRY">
-                        <div class="carousel-caption">
-                            <h3>New site confusing?</h3>
-                            <p>We recently did a complete overhaul of the website. If you need help finding something, click below to take a quick tour of the new site.</p>
-                            <button type="button" class="btn btn-primary">Take the tour >></button>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="#{@yom_image}" alt="PRN_ENTRY">
-                        <div class="carousel-caption">
-                            <h3>Yard of the Month</h3>
-                            <h4>#{@yom_month} winner: #{@yom_name} at #{@yom_addr_short}.</h4>
-                            <a type="button" class="btn btn-primary" href="/secured/members/yom">See more >></a>
-                        </div>
-                    </div>
-                    
-                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-        </div>
+  </div>
+</div>
 
-        <div class="row marketing">
-          <div class="col-lg-6">
-            <h2>Learn more about Princeton Ridge</h2>
-            <hr />
-            <h4>Community</h4>
-            <p>Princeton Ridge is home to a friendly community with private pool and tennis facilities.</p>
+<!-- <div class="jumbotron"> -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-pause="hover">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
 
-            <h4>Homeowners Association</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-          </div>
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="http://princetonridge.com/Entry.JPG" alt="PRN_ENTRY">
+      <div class="carousel-caption">
+        <h3>Welcome to Princeton Ridge</h3>
+        <p>Kennesaw GA</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="http://princetonridge.com/Entry.JPG" alt="PRN_ENTRY">
+      <div class="carousel-caption">
+        <h3>New site confusing?</h3>
+        <p>We recently did a complete overhaul of the website. If you need help finding something, click below to take a quick tour of the new site.</p>
+        <button type="button" class="btn btn-primary">Take the tour >></button>
+      </div>
+    </div>
+    <div class="item">
+      <img src="#{@yom_image}" alt="PRN_ENTRY">
+      <div class="carousel-caption">
+        <h3>Yard of the Month</h3>
+        <h4>#{@yom_month} winner: #{@yom_name}.</h4>
+        <a type="button" class="btn btn-primary" href="/secured/members/yom">See more >></a>
+      </div>
+    </div>
 
-          <div class="col-lg-6">
-            <h2>Existing homeowners</h2>
-            <hr />
-            <h4>Confused by the new site?</h4>
-            <p>Take a quick tour of the new site to help you find what you need quickly. <a href="#">Begin tour >></a></p>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+<!-- </div> -->
 
-            <h4>Residents Dashboard</h4>
-            <p>Previously known as the <i>Residents Only Area</i>, the Residents Dashboard contains meeting minutes, Covenant summaries, and important PRHA documents. <a href="/secured/home">Visit now >></a></p>
+<div class="container marketing">
 
-            <h4>Need the old site?</h4>
-            <p>We're still working on porting everything over. If we forgot something, <a href="http://princetonridge.com/">click here</a> to go to the legacy site.</p>
-          </div>
-        </div>
-      <footer class="footer">
-        <p>Copyright &copy; 2015 - Princeton Ridge Homeowners Association &middot; Developed by <a href="http://github.com/ARMmaster17">Joshua Zenn</a></p>
-        <!-- <p>Version: #{@TRAVISBUILDNUMBER}</p> -->
-        <p><img src="https://img.shields.io/github/license/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/github/tag/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/travis/PrincetonRidgeHA/HomeWeb/master.svg?style=flat-square" /></p>
-      </footer>
-</div> <!-- /container -->
+  <!-- Three columns of text below the carousel -->
+  <div class="row">
+    <div class="col-lg-4">
+      <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+      <h2>Learn more</h2>
+      <p>Princeton Ridge has lots to offer to its residents and the surrounding community. Scroll down to read more.</p>
+    </div>
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+      <h2>Already a resident?</h2>
+      <p>You can find the Resident Directory, Yard of the Month, and important ACC documents in the new Members Area.</p>
+      <p><a class="btn btn-default" href="#" role="button">Take me there &raquo;</a></p>
+    </div>
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+      <h2>Need the old website?</h2>
+      <p>We're still porting everything over. If you need something from the old site, you can find it here.</p>
+      <p><a class="btn btn-default" href="#" role="button">Visit old site &raquo;</a></p>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <!-- START THE FEATURETTES -->
+
+  <hr class="featurette-divider">
+
+  <div class="row featurette">
+    <div class="col-md-7">
+      <h2 class="featurette-heading">Recreation <span class="text-muted">Private pool and tennis facilities.</span></h2>
+      <p class="lead">Princeton Ridge provides fully maintained pool and tennis locations for residents and accompanied guests.</p>
+    </div>
+    <div class="col-md-5">
+      <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+
+  <div class="row featurette">
+    <div class="col-md-7 col-md-push-5">
+      <h2 class="featurette-heading">Community <span class="text-muted">Friendly neighbors at every turn.</span></h2>
+      <p class="lead">Princeton Ridge is a friendly community with many neigborhood activities including pool parties, luncheons, and dinner parties. Children also offer babysitting, lawn mowing and other services.</p>
+    </div>
+    <div class="col-md-5 col-md-pull-7">
+      <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+
+  <div class="row featurette">
+    <div class="col-md-7">
+      <h2 class="featurette-heading">A thriving community.</h2>
+      <p class="lead">Princeton Ridge is located only minutes away from shopping centers, malls, historic sites, and several great schools.</p>
+    </div>
+    <div class="col-md-5">
+      <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+  <footer class="footer">
+    <p>Copyright &copy; 2015 - Princeton Ridge Homeowners Association &middot; Developed by <a href="http://github.com/ARMmaster17">Joshua Zenn</a></p>
+    <!-- <p>Version: #{@TRAVISBUILDNUMBER}</p> -->
+    <p><img src="https://img.shields.io/github/license/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/github/tag/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/travis/PrincetonRidgeHA/HomeWeb/master.svg?style=flat-square"
+      /></p>
+  </footer>
+</div>

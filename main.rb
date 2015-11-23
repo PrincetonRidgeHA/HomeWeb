@@ -44,6 +44,8 @@ get '/' do
   @PageTitle = "Home"
   @notif = Notifications.get_all()
   @bcolor = "#5a5a5a"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/home.css')
   yom_max_year = 1990
   yom_max_month = 0
   @yom_image = "http://princetonridge.com/Entry.JPG"
