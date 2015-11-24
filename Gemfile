@@ -14,3 +14,4 @@ gem 'codacy-coverage', group: :test, require: nil
 gem "activerecord"
 gem "sinatra-activerecord"
 gem "pg"
+gem "octokit", "~> 4.0"

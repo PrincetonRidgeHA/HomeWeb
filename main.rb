@@ -30,11 +30,11 @@ helpers do
       return true
     end
   end
-  def devenv?
-    if ENV['RACK_ENV'] == 'test'
-      return true
-    else
+  def adminlogin?
+    if session[:adminauth].nil?
       return false
+    else
+      return true
     end
   end
 end
@@ -46,6 +46,7 @@ get '/' do
   @bcolor = "#5a5a5a"
   @cssimport = Array.new
   @cssimport.push('/src/css/home.css')
+  @style = 'bootstrap'
   yom_max_year = 1990
   yom_max_month = 0
   @yom_image = "http://princetonridge.com/Entry.JPG"
@@ -56,7 +57,7 @@ get '/' do
     if(item.year > yom_max_year)
       yom_max_year = item.year
       yom_max_month = item.month
-      @yom_image = item.imgpath unless item.imgpath == "#"
+      @yom_image = item.imgpath
       @yom_name = item.name
       @yom_addr_short = item.address
       @yom_month = Dateservice.get_month(item.month)
@@ -64,23 +65,28 @@ get '/' do
       if(item.month > yom_max_month)
         yom_max_year = item.year
         yom_max_month = item.month
-        @yom_image = item.imgpath unless item.imgpath == "#"
+        @yom_image = item.imgpath
         @yom_name = item.name
         @yom_addr_short = item.address
         @yom_month = Dateservice.get_month(item.month)
       end
     end
   end
+  if(@yom_image == '#')
+    @yom_image = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+  end
   slim :home
 end
 get '/contact' do
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   slim :bugreport
 end
 post '/contact' do
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   slim :processing
   Mailer.send(Pagevars.set_vars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
   redirect '/'
@@ -90,6 +96,7 @@ get '/login' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(session[:authtries] == nil)
     session[:authtries] = 0
     slim :login
@@ -105,6 +112,7 @@ post '/login' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Sign in"
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(params[:inputPassword] == ENV['ADMIN_PWD'])
     session[:authusr] = true
     redirect '/secured/members/home'
@@ -135,6 +143,7 @@ get '/test/:key/dbinsert/resident' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_resident
   else
@@ -146,6 +155,7 @@ post '/test/:key/dbinsert/resident' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(params[:key] == 'PRHAKEY')
     idct = 0;
     while(true)
@@ -173,6 +183,7 @@ get '/test/:key/dbinsert/yom' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(params[:key] == 'PRHAKEY')
     slim :test_dbinsert_yom
   else
@@ -184,6 +195,7 @@ post '/test/:key/dbinsert/yom' do
   redirect '/login' unless login?
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(params[:key] == 'PRHAKEY')
     idct = 0;
     while(true)
@@ -212,6 +224,7 @@ get '/secured/members/:page' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @style = 'bootstrap'
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
     slim :member_home
@@ -230,4 +243,45 @@ get '/secured/members/:page' do
   else
     redirect '/secured/members/home'
   end
+end
+get '/admin/login' do
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Administrator Sign In"
+  @cssimport = Array.new
+  @cssimport.push '/src/css/admin/login.css'
+  @style = 'metro'
+  slim :admin_login
+end
+post '/admin/login' do
+  # client = Octokit::Client.new(:login => params['user_login'], :password => params['user_password'])
+  # Fetch the current user
+  # client.user
+  session[:adminauth] = true
+  session[:admin_username] = params['user_login']
+  session[:admin_secret] = params['user_password']
+  redirect '/admin/dashboard'
+end
+get '/admin/dashboard' do
+  redirect '/admin/dashboard/home'
+end
+get '/admin/dashboard/home' do
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Administration"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @admin_uname = session[:admin_username]
+  @style = 'metro'
+  slim :admin_dashboard
+end
+get '/admin/dashboard/about' do
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "About"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @admin_uname = session[:admin_username]
+  @style = 'metro'
+  slim :admin_dashboard_about
 end

@@ -10,11 +10,20 @@
     <meta name="author" content="Joshua Zenn">
     <!--<link rel="icon" href="../../favicon.ico">-->
     
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    - if @style == 'bootstrap'
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    - if @style == 'metro'
+      <link href="https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro.min.css" rel="stylesheet">
+      <link href="https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-responsive.min.css" rel="stylesheet">
+      <link href="https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-schemes.min.css" rel="stylesheet">
+      <link href="https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-rtl.min.css" rel="stylesheet">
+      <link href="https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-icons.min.css" rel="stylesheet">
+      <script src="https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/js/metro.min.js"></script>
+      <script src="/src/js/metro/notif.js"></script>
     <!-- <link rel="stylesheet" href="/src/css/global.css"> -->
     - @cssimport.each do |i|
       <link rel="stylesheet" href="#{i}">
@@ -27,13 +36,17 @@
   </head>
   <body>
     == yield
-    - @notif.each do |t|
-      javascript:
-        toastr.options = {
-        "closeButton": true
-        }
-        toastr.info('#{t}');
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    - if @style == 'bootstrap'
+      - @notif.each do |t|
+        javascript:
+          toastr.options = {
+          "closeButton": true
+          }
+          toastr.info('#{t}');
+    - if @style == 'metro'
+      - @notif.each do |t|
+        javascript:
+          pushMessage(' |#{t}');
+      <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
