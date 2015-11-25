@@ -1,0 +1,148 @@
+<div class="app-bar fixed-top darcula" data-role="appbar">
+    <a class="app-bar-element branding" href="/">Princeton Ridge</a>
+    <span class="app-bar-divider"></span>
+    <ul class="app-bar-menu">
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li>
+            <a href="" class="dropdown-toggle">Data Management</a>
+            <ul class="d-menu" data-role="dropdown">
+                <li><a href="/admin/dashboard/data/rd">Resident Directory</a></li>
+                <li><a href="/admin/dashboard/data/docs">Documents</a></li>
+                <li><a href="/admin/dashboard/data/yom">Yard of the Month</a></li>
+                <li class="divider"></li>
+                <li><a href="/admin/dashboard/data/info">Database Info</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Bug Reports</a></li>
+    </ul>
+    <div class="app-bar-element place-right">
+        <span class="dropdown-toggle"><span class="mif-user"></span>#{@admin_uname}</span>
+        <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-dark" data-role="dropdown" data-no-close="true" style="width: 220px">
+            <h2 class="text-light">Quick settings</h2>
+            <ul class="unstyled-list fg-dark">
+                <li><a href="http://github.com/#{@admin_uname}" class="fg-white1 fg-hover-yellow">View profile</a></li>
+                <li><a href="/admin/logout" class="fg-white3 fg-hover-yellow">Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <div class="flex-grid no-responsive-future" style="height: 100%;">
+        <div class="row" style="height: 100%">
+            <div class="cell size-x200" id="cell-sidebar" style="background-color: #71b1d1; height: 100%">
+                <ul class="sidebar">
+                    <li>
+                        <a href="/admin/dashboard/data/info">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">DB Info</span>
+                            <span class="counter">0</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/dashboard/data/rd">
+                            <span class="mif-users icon"></span>
+                            <span class="title">Resident Directory</span>
+                            <span class="counter">#{@rdcount}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/dashboard/data/docs">
+                            <span class="mif-file-pdf icon"></span>
+                            <span class="title">Documents</span>
+                            <span class="counter">#{@docscount}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/dashboard/data/yom">
+                            <span class="mif-medal icon"></span>
+                            <span class="title">Yard of the Month</span>
+                            <span class="counter">#{@yomcount}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="cell auto-size padding20 bg-white" id="cell-content">
+                <h1 class="text-light">Residents (#{@rdcount})</h1>
+                <hr class="thin bg-grayLighter">
+                <table class="table striped hovered cell-hovered border bordered">
+                    <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Address</th>
+                          <th>Email</th>
+                          <th>Phone Number</th>
+                          <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        - @items.each do |item|
+                          <form action="/admin/dashboard/data/rd" method="POST">
+                              <tr>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[id]" readonly value="#{item.id}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[name]" value="#{item.name}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[addr]" value="#{item.addr}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[email]" value="#{item.email}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[pnum]" value="#{item.pnum}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <input class="button primary" type="submit" name="operation" value="Update" />
+                                      <input class="button danger" type="submit" name="operation" value="Delete" />
+                                  </td>
+                              </tr>
+                          </form>
+                        <form action="/admin/dashboard/data/rd" method="POST">
+                              <tr>
+                                  <td>
+                                      
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[name]" placeholder="Name">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[addr]" placeholder="Address">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[email]" placeholder="Email">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="rdd[pnum]" placeholder="Phone number">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <input class="button success" type="submit" name="operation" value="Create" />
+                                  </td>
+                              </tr>
+                        </form>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

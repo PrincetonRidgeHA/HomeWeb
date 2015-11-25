@@ -179,46 +179,6 @@ post '/test/:key/dbinsert/resident' do
     slim :error
   end
 end
-get '/test/:key/dbinsert/yom' do
-  redirect '/login' unless login?
-  @notif = Notifications.get_all()
-  @cssimport = Array.new
-  @style = 'bootstrap'
-  if(params[:key] == 'PRHAKEY')
-    slim :test_dbinsert_yom
-  else
-    @errdetail = '0x3'
-    slim :error
-  end
-end
-post '/test/:key/dbinsert/yom' do
-  redirect '/login' unless login?
-  @notif = Notifications.get_all()
-  @cssimport = Array.new
-  @style = 'bootstrap'
-  if(params[:key] == 'PRHAKEY')
-    idct = 0;
-    while(true)
-      params[:yardwinnerdata]['id'] = idct;
-      if(idct >= 1000)
-        @errdetail = '0x2'
-        slim :error
-        break
-      end
-      begin
-        @yomwinner = Yardwinners.new(params[:yardwinnerdata])
-	      @yomwinner.save
-	      break
-      rescue
-        idct = idct + 1;
-      end
-    end
-    slim :test_dbinsert_yom
-  else
-    @errdetail = '0x3'
-    slim :error
-  end
-end
 get '/secured/members/:page' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -230,15 +190,15 @@ get '/secured/members/:page' do
     slim :member_home
   elsif(params[:page] == 'residents')
     @PageTitle = "Directory - Residents Dashboard"
-    @items = Residents.all
+    @items = Residents.all.order(:name)
     slim :member_directory
   elsif(params[:page] == 'docs')
     @PageTitle = "Documents - Residents Dashboard"
-    @items = Docs.all
+    @items = Docs.all.order(:id)
     slim :member_docs
   elsif(params[:page] == 'yom')
     @PageTitle = "Yard of the Month - Residents Dashboard"
-    @items = Yardwinners.all
+    @items = Yardwinners.all.order(:id)
     slim :member_yom
   else
     redirect '/secured/members/home'
@@ -284,4 +244,192 @@ get '/admin/dashboard/about' do
   @admin_uname = session[:admin_username]
   @style = 'metro'
   slim :admin_dashboard_about
+end
+get '/admin/dashboard/data/yom' do
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Yard of the Month"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  # Page specific data
+  @items = Yardwinners.all.order(:id)
+  slim :admin_data_yom
+end
+post '/admin/dashboard/data/yom' do
+  #perform operation with data
+  if(params['operation'] == 'Update')
+    opdata = Yardwinners.find(params['yardwinnerdata']['id'])
+    opdata.name = params['yardwinnerdata']['name']
+    opdata.address = params['yardwinnerdata']['address']
+    opdata.month = params['yardwinnerdata']['month']
+    opdata.year = params['yardwinnerdata']['year']
+    opdata.imgpath = params['yardwinnerdata']['imgpath']
+    begin
+      opdata.save
+      transmessage = 'Record updated.'
+    rescue
+      transmessage = 'Record update failed!'
+    end
+  elsif(params['operation'] == 'Create')
+    begin
+      params[:yardwinnerdata]['id'] = Yardwinners.count
+      yomwinner = Yardwinners.new(params[:yardwinnerdata])
+	    yomwinner.save
+	    transmessage = 'Record added.'
+    rescue
+      transmessage = 'Record add failed!'
+    end
+  end
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @notif.push(transmessage)
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Yard of the Month"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  # Page specific data
+  @items = Yardwinners.all.order(:id)
+  slim :admin_data_yom
+end
+get '/admin/dashboard/data/rd' do
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Residents"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  # Page specific data
+  @items = Residents.all.order(:name)
+  slim :admin_data_rd
+end
+post '/admin/dashboard/data/rd' do
+  #perform operation with data
+  if(params['operation'] == 'Update')
+    opdata = Residents.find(params['rdd']['id'])
+    opdata.name = params['rdd']['name']
+    opdata.addr = params['rdd']['addr']
+    opdata.email = params['rdd']['email']
+    opdata.pnum = params['rdd']['pnum']
+    begin
+      opdata.save
+      transmessage = 'Record updated.'
+    rescue
+      transmessage = 'Record update failed!'
+    end
+  elsif(params['operation'] == 'Create')
+    idct = 0;
+    params['rdd']['id'] = Residents.count
+    begin
+      red = Residents.new(params['rdd'])
+      red.save
+      transmessage = 'Record added.'
+    rescue
+      transmessage = 'Record add failed!'
+    end
+  end
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @notif.push(transmessage)
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Residents"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  # Page specific data
+  @items = Residents.all.order(:name)
+  slim :admin_data_rd
+end
+get '/admin/dashboard/data/docs' do
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Documents"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  # Page specific data
+  @items = Docs.all
+  slim :admin_data_docs
+end
+post '/admin/dashboard/data/docs' do
+  #perform operation with data
+  if(params['operation'] == 'Update')
+    opdata = Docs.find(params['doc']['id'])
+    opdata.name = params['doc']['name']
+    opdata.uploaddate = params['doc']['uploaddate']
+    opdata.uploadedby = params['doc']['uploadedby']
+    opdata.url = params['doc']['url']
+    begin
+      opdata.save
+      transmessage = 'Record updated.'
+    rescue
+      transmessage = 'Record update failed!'
+    end
+  elsif(params['operation'] == 'Create')
+    params['doc']['id'] = Docs.count
+    begin
+      docdata = Docs.new(params['doc'])
+      docdata.save
+      transmessage = 'Record added.'
+    rescue
+      transmessage = 'Record add failed!'
+    end
+  end
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @notif.push(transmessage)
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Documents"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  # Page specific data
+  @items = Docs.all
+  slim :admin_data_docs
 end
