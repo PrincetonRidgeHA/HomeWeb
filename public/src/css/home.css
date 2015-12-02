@@ -1,3 +1,17 @@
+/* Glyphicons
+-------------------------------------------------- */
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+.gi-6x{font-size: 6em;}
+.gi-7x{font-size: 7em;}
+.gi-8x{font-size: 8em;}
+.gi-9x{font-size: 9em;}
+.gi-10x{font-size: 10em;}
+
+.gi-holder{text-align:center;}
+
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */

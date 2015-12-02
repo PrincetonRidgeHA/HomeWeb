@@ -16,6 +16,7 @@ require_relative 'inc/dateservice'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
+set :member_dashboard_password, ENV['ADMIN_PWD'] || 'test'
 
 enable :sessions
 
@@ -113,7 +114,7 @@ post '/login' do
   @PageTitle = "Sign in"
   @cssimport = Array.new
   @style = 'bootstrap'
-  if(params[:inputPassword] == ENV['ADMIN_PWD'])
+  if(params[:inputPassword] == :member_dashboard_password)
     session[:authusr] = true
     redirect '/secured/members/home'
   else
@@ -184,6 +185,7 @@ get '/secured/members/:page' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @notif = Notifications.get_all()
   @cssimport = Array.new
+  @cssimport.push '/src/css/admin/dashboard.css'
   @style = 'bootstrap'
   if(params[:page] == 'home')
     @PageTitle = "Home - Residents Dashboard"
