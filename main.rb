@@ -140,46 +140,6 @@ get '/test/:key/resetauth' do
     redirect '/'
   end
 end
-get '/test/:key/dbinsert/resident' do
-  redirect '/login' unless login?
-  @notif = Notifications.get_all()
-  @cssimport = Array.new
-  @style = 'bootstrap'
-  if(params[:key] == 'PRHAKEY')
-    slim :test_dbinsert_resident
-  else
-    @errdetail = '0x3'
-    slim :error
-  end
-end
-post '/test/:key/dbinsert/resident' do
-  redirect '/login' unless login?
-  @notif = Notifications.get_all()
-  @cssimport = Array.new
-  @style = 'bootstrap'
-  if(params[:key] == 'PRHAKEY')
-    idct = 0;
-    while(true)
-      params[:residents]['id'] = idct;
-      if(idct >= 1000)
-        @errdetail = '0x2'
-        slim :error
-        break
-      end
-      begin
-        @residents = Residents.new(params[:residents])
-	      @residents.save
-	      break
-      rescue
-        idct = idct + 1;
-      end
-    end
-    slim :test_dbinsert_resident
-  else
-    @errdetail = '0x3'
-    slim :error
-  end
-end
 get '/secured/members/:page' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
