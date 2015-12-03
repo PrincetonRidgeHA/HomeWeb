@@ -152,7 +152,7 @@ get '/news' do
   @cssimport = Array.new
   @cssimport.push('/src/css/home.css')
   @style = 'bootstrap'
-  @articles = News.all.order(:id)
+  @articles = News.all.order(:uploaddate)
   slim :news
 end
 get '/test/:key/resetauth' do
