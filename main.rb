@@ -17,7 +17,7 @@ require_relative 'inc/dateservice'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
-set :member_dashboard_password, ENV['ADMIN_PWD'] || 'test'
+
 
 enable :sessions
 
@@ -115,7 +115,7 @@ post '/login' do
   @PageTitle = "Sign in"
   @cssimport = Array.new
   @style = 'bootstrap'
-  if(params[:inputPassword] == :member_dashboard_password)
+  if(params[:inputPassword] == ENV['ADMIN_PWD'])
     session[:authusr] = true
     redirect '/secured/members/home'
   else
