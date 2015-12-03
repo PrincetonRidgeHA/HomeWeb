@@ -9,6 +9,7 @@
                 <li><a href="/admin/dashboard/data/rd">Resident Directory</a></li>
                 <li><a href="/admin/dashboard/data/docs">Documents</a></li>
                 <li><a href="/admin/dashboard/data/yom">Yard of the Month</a></li>
+                <li><a href="/admin/dashboard/data/news">News</a></li>
                 <li class="divider"></li>
                 <li><a href="/admin/dashboard/data/info">Database Info</a></li>
             </ul>
@@ -59,7 +60,15 @@
                             <span class="counter">#{@yomcount}</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/admin/dashboard/data/news">
+                            <span class="mif-broadcast icon"></span>
+                            <span class="title">News</span>
+                            <span class="counter">#{@newscount}</span>
+                        </a>
+                    </li>
                 </ul>
+                
             </div>
             <div class="cell auto-size padding20 bg-white" id="cell-content">
                 <h1 class="text-light">Yard of the Month (#{@yomcount})</h1>

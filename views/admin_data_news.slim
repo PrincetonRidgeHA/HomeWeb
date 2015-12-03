@@ -39,7 +39,7 @@
                             <span class="counter">0</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="/admin/dashboard/data/rd">
                             <span class="mif-users icon"></span>
                             <span class="title">Resident Directory</span>
@@ -60,7 +60,7 @@
                             <span class="counter">#{@yomcount}</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="/admin/dashboard/data/news">
                             <span class="mif-broadcast icon"></span>
                             <span class="title">News</span>
@@ -70,47 +70,51 @@
                 </ul>
             </div>
             <div class="cell auto-size padding20 bg-white" id="cell-content">
-                <h1 class="text-light">Residents (#{@rdcount})</h1>
+                <h1 class="text-light">News (#{@newscount})</h1>
                 <hr class="thin bg-grayLighter">
                 <table class="table striped hovered cell-hovered border bordered">
                     <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Name</th>
-                          <th>Address</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
+                          <th>Publish date</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Uploader</th>
+                          <th>View</th>
                           <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         - @items.each do |item|
-                          <form action="/admin/dashboard/data/rd" method="POST">
+                          <form action="/admin/dashboard/data/news" method="POST">
                               <tr>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[id]" readonly value="#{item.id}">
+                                        <input type="text" name="newsdata[id]" readonly value="#{item.id}">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[name]" value="#{item.name}">
+                                        <input type="text" name="newsdata[uploaddate]" value="#{item.uploaddate}">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[addr]" value="#{item.addr}">
+                                        <input type="text" name="newsdata[title]" value="#{item.title}">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[email]" value="#{item.email}">
+                                        <input type="text" name="newsdata[content]" value="#{item.content}">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[pnum]" value="#{item.pnum}">
+                                        <input type="text" name="newsdata[uploadedby]" value="#{item.uploadedby}">
                                       </div>
+                                  </td>
+                                  <td>
+                                      <a href="/news/#{item.id}" class="button primary">View</a>
                                   </td>
                                   <td>
                                       <input class="button primary" type="submit" name="operation" value="Update" />
@@ -118,30 +122,33 @@
                                   </td>
                               </tr>
                           </form>
-                        <form action="/admin/dashboard/data/rd" method="POST">
+                        <form action="/admin/dashboard/data/news" method="POST">
                               <tr>
                                   <td>
                                       
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[name]" placeholder="Name">
+                                        <input type="text" name="newsdata[uploaddate]" placeholder="MM/DD/YYYY">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[addr]" placeholder="Address">
+                                        <input type="text" name="newsdata[title]" placeholder="Title">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[email]" placeholder="Email">
+                                        <input type="text" name="newsdata[content]" placeholder="Content">
                                       </div>
                                   </td>
                                   <td>
                                       <div class="input-control text">
-                                        <input type="text" name="rdd[pnum]" placeholder="Phone number">
+                                        <input type="text" name="newsdata[uploadedby]" placeholder="Uploader">
                                       </div>
+                                  </td>
+                                  <td>
+                                      
                                   </td>
                                   <td>
                                       <input class="button success" type="submit" name="operation" value="Create" />

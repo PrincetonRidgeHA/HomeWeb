@@ -1,0 +1,46 @@
+<!-- <div class="container"> -->
+<div class="navbar-wrapper">
+  <div class="container">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Princeton Ridge</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+            <li class="active"><a href="/news">News</a></li>
+            <li><a href="/secured/members/home">Secured</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </div>
+</div>
+
+<div class="container marketing">
+
+  <!-- START THE FEATURETTES -->
+
+  <hr id="feature-start" class="featurette-divider">
+
+  <h1>#{@article.title}</h1>
+  <h6>#{@article.uploaddate} - #{@article.uploadedby}</h6>
+  <p>#{@article.content}</p>
+
+  <hr class="featurette-divider">
+  <footer class="footer">
+    <p class="pull-right"><img src="https://img.shields.io/github/license/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/github/tag/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/travis/PrincetonRidgeHA/HomeWeb/master.svg?style=flat-square" /></p>
+    <p>&copy; 2015 - Princeton Ridge Homeowners Association &middot; Developed by <a href="http://github.com/ARMmaster17">Joshua Zenn</a></p>
+    <p><a href="http://glyphicons.com/">Glyphicons</a> are property of Jan Kovarik</p>
+  </footer>
+</div>

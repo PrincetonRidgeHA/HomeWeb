@@ -10,6 +10,7 @@ require './inc/notifications'
 require './models/residents.rb'
 require './models/docs.rb'
 require './models/yard_winners.rb'
+require './models/news.rb'
 require_relative 'inc/pagevars'
 require_relative 'inc/mailer'
 require_relative 'inc/dateservice'
@@ -132,6 +133,28 @@ post '/login' do
     end
   end
 end
+get '/news/:id' do
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  @bcolor = "#5a5a5a"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/home.css')
+  @style = 'bootstrap'
+  @article = News.find(params[:id])
+  @PageTitle = "#{@article.title} - News"
+  slim :news_article
+end
+get '/news' do
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  @PageTitle = "News"
+  @bcolor = "#5a5a5a"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/home.css')
+  @style = 'bootstrap'
+  @articles = News.all.order(:id)
+  slim :news
+end
 get '/test/:key/resetauth' do
   if(params[:key] == 'PRHAKEY')
     session[:authtries] = 0
@@ -222,6 +245,7 @@ get '/admin/dashboard/data/yom' do
   @yomcount = Yardwinners.count
   @rdcount = Residents.count
   @docscount = Docs.count
+  @newscount = News.count
   # Page specific data
   @items = Yardwinners.all.order(:id)
   slim :admin_data_yom
@@ -266,6 +290,7 @@ post '/admin/dashboard/data/yom' do
   @yomcount = Yardwinners.count
   @rdcount = Residents.count
   @docscount = Docs.count
+  @newscount = News.count
   # Page specific data
   @items = Yardwinners.all.order(:id)
   slim :admin_data_yom
@@ -285,6 +310,7 @@ get '/admin/dashboard/data/rd' do
   @yomcount = Yardwinners.count
   @rdcount = Residents.count
   @docscount = Docs.count
+  @newscount = News.count
   # Page specific data
   @items = Residents.all.order(:name)
   slim :admin_data_rd
@@ -329,6 +355,7 @@ post '/admin/dashboard/data/rd' do
   @yomcount = Yardwinners.count
   @rdcount = Residents.count
   @docscount = Docs.count
+  @newscount = News.count
   # Page specific data
   @items = Residents.all.order(:name)
   slim :admin_data_rd
@@ -348,6 +375,7 @@ get '/admin/dashboard/data/docs' do
   @yomcount = Yardwinners.count
   @rdcount = Residents.count
   @docscount = Docs.count
+  @newscount = News.count
   # Page specific data
   @items = Docs.all
   slim :admin_data_docs
@@ -391,7 +419,72 @@ post '/admin/dashboard/data/docs' do
   @yomcount = Yardwinners.count
   @rdcount = Residents.count
   @docscount = Docs.count
+  @newscount = News.count
   # Page specific data
   @items = Docs.all
   slim :admin_data_docs
+end
+get '/admin/dashboard/data/news' do
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "News"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  @newscount = News.count
+  # Page specific data
+  @items = News.all.order(:id)
+  slim :admin_data_news
+end
+post '/admin/dashboard/data/news' do
+  #perform operation with data
+  if(params['operation'] == 'Update')
+    opdata = News.find(params['newsdata']['id'])
+    opdata.title = params['newsdata']['title']
+    opdata.content = params['newsdata']['content']
+    opdata.uploaddate = params['newsdata']['uploaddate']
+    opdata.uploadedby = params['newsdata']['uploadedby']
+    begin
+      opdata.save
+      transmessage = 'Record updated.'
+    rescue
+      transmessage = 'Record update failed!'
+    end
+  elsif(params['operation'] == 'Create')
+    begin
+      params['newsdata']['id'] = News.count
+      newsobj = News.new(params['newsdata'])
+	    newsobj.save
+	    transmessage = 'Record added.'
+    rescue
+      transmessage = 'Record add failed!'
+    end
+  end
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @notif.push(transmessage)
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "News"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  @newscount = News.count
+  # Page specific data
+  @items = News.all.order(:id)
+  slim :admin_data_news
 end
