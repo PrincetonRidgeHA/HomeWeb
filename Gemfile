@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby "2.2.1"
 
 gem 'rack-protection'
+gem 'redcarpet'
 gem 'puma'
 gem 'sinatra'
 gem 'slim'

@@ -4,6 +4,7 @@ require 'sinatra'
 require 'slim'
 require 'rest-client'
 require 'json'
+require 'tilt/redcarpet'
 require 'sinatra/activerecord'
 require './config/environments'
 require './inc/notifications'
@@ -188,6 +189,9 @@ get '/secured/members/:page' do
   else
     redirect '/secured/members/home'
   end
+end
+get '/admin' do
+  redirect '/admin/login'
 end
 get '/admin/login' do
   @notif = Notifications.get_all()
@@ -487,4 +491,26 @@ post '/admin/dashboard/data/news' do
   # Page specific data
   @items = News.all.order(:id)
   slim :admin_data_news
+end
+get '/help/u/:page' do
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Help"
+  @notif = Notifications.get_all()
+  @bcolor = "#5a5a5a"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/help/user.css')
+  @style = 'bootstrap'
+  pg_name = 'help_user_' + params['page']
+  slim pg_name.to_sym
+end
+get '/help/a/:page' do
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Admin Help"
+  @notif = Notifications.get_all()
+  @bcolor = "#5a5a5a"
+  @cssimport = Array.new
+  @cssimport.push('/src/css/help/admin.css')
+  @style = 'bootstrap'
+  pg_name = 'help_admin_' + params['page']
+  slim pg_name.to_sym
 end
