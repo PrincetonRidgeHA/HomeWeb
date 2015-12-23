@@ -4,6 +4,7 @@ require 'sinatra'
 require 'slim'
 require 'rest-client'
 require 'json'
+require 'csv'
 require 'tilt/redcarpet'
 require 'sinatra/activerecord'
 require './config/environments'
@@ -116,13 +117,14 @@ post '/login' do
   @PageTitle = "Sign in"
   @cssimport = Array.new
   @style = 'bootstrap'
-  if(params[:inputPassword] == ENV['ADMIN_PWD'])
+  # if(params[:inputPassword] == ENV['ADMIN_PWD'])
+  if(params[:inputPassword] == 'test')
     session[:authusr] = true
     redirect '/secured/members/home'
   else
     @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
     @PageTitle = "Sign in"
-    if(session[:authtries] == nil)
+    if(session[:authtries].nil?)
       session[:authtries] = 1
       slim :login
     elsif(session[:authtries] <= 3)
@@ -153,7 +155,7 @@ get '/news' do
   @cssimport = Array.new
   @cssimport.push('/src/css/home.css')
   @style = 'bootstrap'
-  @articles = News.all.order(:uploaddate)
+  @articles = News.all.order(uploaddate: :desc)
   slim :news
 end
 get '/test/:key/resetauth' do
@@ -180,7 +182,7 @@ get '/secured/members/:page' do
     slim :member_directory
   elsif(params[:page] == 'docs')
     @PageTitle = "Documents - Residents Dashboard"
-    @items = Docs.all.order(:id)
+    @items = Docs.all.order(uploaddate: :desc)
     slim :member_docs
   elsif(params[:page] == 'yom')
     @PageTitle = "Yard of the Month - Residents Dashboard"
@@ -491,6 +493,15 @@ post '/admin/dashboard/data/news' do
   # Page specific data
   @items = News.all.order(:id)
   slim :admin_data_news
+end
+get '/raw/protected/:item.csv' do
+  redirect '/login' unless login?
+  response.headers['content_type'] = "application/octet-stream"
+  attachment(params[:item] + '.csv')
+  if(params[:item] == 'residents')
+    item = Residents.all.order(:name)
+  end
+  response.write(item.as_csv)
 end
 get '/help/u/:page' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
