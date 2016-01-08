@@ -1,1 +1,1 @@
-web: ruby ./main.rb
+web: ruby ./frontend/main.rb

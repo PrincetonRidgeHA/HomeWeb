@@ -1,7 +1,7 @@
 module Pagevars
   begin
     if ENV['env'] == 'production'
-      require_relative 'inc/builddata'
+      require_relative './builddata'
     else
       require_relative '../builddata.partial'
     end
