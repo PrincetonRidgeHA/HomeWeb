@@ -28,8 +28,8 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - echo 'Configuring JIT variables...'
-  - sed 's/TRAVISCOMMIT/'$TRAVIS_COMMIT'/' builddata.partial.rb > builddata.partial2.rb
-  - sed 's/TRAVISBUILD/'$TRAVIS_BUILD_NUMBER'/' builddata.partial2.rb > frontend/inc/builddata.rb
+  - sed 's/TRAVISCOMMIT/'$TRAVIS_COMMIT'/' ./frontend/builddata.partial.rb > ./frontend/builddata.partial2.rb
+  - sed 's/TRAVISBUILD/'$TRAVIS_BUILD_NUMBER'/' ./frontend/builddata.partial2.rb > ./frontend/inc/builddata.rb
   #- head ./inc/builddata.rb
   - rake test --trace
 deploy:
