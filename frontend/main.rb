@@ -117,8 +117,7 @@ post '/login' do
   @PageTitle = "Sign in"
   @cssimport = Array.new
   @style = 'bootstrap'
-  # if(params[:inputPassword] == ENV['ADMIN_PWD'])
-  if(params[:inputPassword] == 'test')
+  if(params[:inputPassword] == ENV['ADMIN_PWD'])
     session[:authusr] = true
     redirect '/secured/members/home'
   else
