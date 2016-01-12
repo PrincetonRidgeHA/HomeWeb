@@ -30,7 +30,7 @@ helpers do
   def login?
     if session[:authusr].nil?
       return false
-    elsif ENV['RACK_ENV'] == "testing"
+    elsif ENV['RACK_ENV'] == "test"
       return true
     else
       return true
@@ -39,7 +39,7 @@ helpers do
   def adminlogin?
     if session[:adminauth].nil?
       return false
-    elsif ENV['RACK_ENV'] == "testing"
+    elsif ENV['RACK_ENV'] == "test"
       return true
     else
       return true
