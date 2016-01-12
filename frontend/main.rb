@@ -30,6 +30,8 @@ helpers do
   def login?
     if session[:authusr].nil?
       return false
+    elsif ENV['RACK_ENV'] == "testing"
+      return true
     else
       return true
     end
@@ -37,6 +39,8 @@ helpers do
   def adminlogin?
     if session[:adminauth].nil?
       return false
+    elsif ENV['RACK_ENV'] == "testing"
+      return true
     else
       return true
     end
@@ -203,7 +207,7 @@ get '/admin/login' do
   @style = 'metro'
   slim :admin_login
 end
-post '/admin/login' do
+post '/admin/oauth/v2/github/callback' do
   # client = Octokit::Client.new(:login => params['user_login'], :password => params['user_password'])
   # Fetch the current user
   # client.user
@@ -501,26 +505,4 @@ get '/raw/protected/:item.csv' do
     item = Residents.all.order(:name)
   end
   response.write(item.as_csv)
-end
-get '/help/u/:page' do
-  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
-  @PageTitle = "Help"
-  @notif = Notifications.get_all()
-  @bcolor = "#5a5a5a"
-  @cssimport = Array.new
-  @cssimport.push('/src/css/help/user.css')
-  @style = 'bootstrap'
-  pg_name = 'help_user_' + params['page']
-  slim pg_name.to_sym
-end
-get '/help/a/:page' do
-  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
-  @PageTitle = "Admin Help"
-  @notif = Notifications.get_all()
-  @bcolor = "#5a5a5a"
-  @cssimport = Array.new
-  @cssimport.push('/src/css/help/admin.css')
-  @style = 'bootstrap'
-  pg_name = 'help_admin_' + params['page']
-  slim pg_name.to_sym
 end
