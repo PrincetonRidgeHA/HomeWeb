@@ -21,7 +21,8 @@ class TestVersion < Test::Unit::TestCase
     assert last_response.ok?
   end
   def test_loginservice
-    post '/login', 'inputPassword' => 'test'
+    post '/login', 'inputPassword' => 'testenv'
+    assert last_response.redirect?
   end
   def test_PROT_dashboard
     get '/secured/members/home'

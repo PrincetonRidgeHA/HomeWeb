@@ -39,7 +39,7 @@ helpers do
   def adminlogin?
     if session[:adminauth].nil?
       return false
-    elsif ENV['RACK_ENV'] == "test"
+    elsif ENV['RACK_ENV'] != "test"
       return true
     else
       return true
