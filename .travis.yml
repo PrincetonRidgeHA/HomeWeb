@@ -6,7 +6,6 @@ git:
   submodules: false
 env:
   global:
-    - RACK_ENV=test
     - CODACY_PROJECT_TOKEN=5f064f16d2a448959ea7b2565f9006d9
 notifications:
   email:
