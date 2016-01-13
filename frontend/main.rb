@@ -28,19 +28,19 @@ helpers do
     slim template, :layout => false, :locals => locals
   end
   def login?
-    if session[:authusr].nil?
+    if ENV['CI']
       return false
-    elsif ENV['CI']
-      return true
+    elsif session[:authusr].nil?
+      return false
     else
       return true
     end
   end
   def adminlogin?
-    if session[:adminauth].nil?
-      return false
-    elsif ENV['CI']
+    if ENV['CI']
       return true
+    elsif session[:adminauth].nil?
+      return false
     else
       return true
     end
