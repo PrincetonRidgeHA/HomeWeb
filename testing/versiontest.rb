@@ -5,6 +5,8 @@ require_relative '../frontend/main'
 
 class TestVersion < Test::Unit::TestCase
   include Rack::Test::Methods
+  self.test_order = :defined
+  
   def app
     Sinatra::Application
   end
@@ -21,7 +23,7 @@ class TestVersion < Test::Unit::TestCase
     assert last_response.ok?
   end
   def test_loginservice
-    post '/login', 'inputPassword' => 'testenv'
+    post '/login', 'inputPassword' => ENV['ADMIN_PWD']
     assert last_response.redirect?
   end
   def test_PROT_dashboard
