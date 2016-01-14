@@ -45,8 +45,6 @@ class TestVersion < Test::Unit::TestCase
   def test_PADM_dashboard_static
     get '/admin/dashboard/home'
     assert last_response.ok?
-    get '/admin/dashboard/about'
-    assert last_response.ok?
   end
   def test_PADM_data
     get '/admin/dashboard/data/yom'
