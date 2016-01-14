@@ -45,6 +45,9 @@ helpers do
       return true
     end
   end
+  def prtl(template, context = nil)
+    Slim::Template.new { template }.render(context)
+  end
 end
 
 get '/' do
@@ -228,16 +231,6 @@ get '/admin/dashboard/home' do
   @admin_uname = session[:admin_username]
   @style = 'metro'
   slim :admin_dashboard
-end
-get '/admin/dashboard/about' do
-  @notif = Notifications.get_all()
-  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
-  @PageTitle = "About"
-  @cssimport = Array.new
-  @cssimport.push('/src/css/admin/dashboard.css')
-  @admin_uname = session[:admin_username]
-  @style = 'metro'
-  slim :admin_dashboard_about
 end
 get '/admin/dashboard/data/yom' do
   # Global page parameters
