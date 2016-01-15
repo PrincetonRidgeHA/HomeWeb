@@ -225,12 +225,28 @@ get '/admin/login' do
   @cssimport = Array.new
   @cssimport.push '/src/css/admin/login.css'
   @style = 'metro'
+  @gitid = ENV['GITHUB_CLIENT_ID']
   slim :admin_login
 end
 post '/admin/oauth/v2/github/callback' do
+  # get temporary GitHub code...
+  session_code = request.env['rack.request.query_hash']['code']
+
+  # ... and POST it back to GitHub
+  result = RestClient.post('https://github.com/login/oauth/access_token',
+                          {:client_id => ENV['GITHUB_CLIENT_ID'],
+                           :client_secret => ENV['GITHUB_CLIENT_SECRET'],
+                           :code => session_code},
+                           :accept => :json)
+
+  # extract the token and granted scopes
+  access_token = JSON.parse(result)['access_token']
+  auth_result = JSON.parse(RestClient.get('https://api.github.com/user',
+                                        {:params => {:access_token => access_token}}))
   session[:adminauth] = true
-  session[:admin_username] = params['user_login']
-  session[:admin_secret] = params['user_password']
+  session[:adminkey] = access_token
+  session[:admin_username] = auth_result.login
+  session[:admin_profilepic] = auth_result.avatar_url
   redirect '/admin/dashboard'
 end
 get '/admin/dashboard' do

@@ -17,22 +17,8 @@ javascript:
         <hr class="thin" />
         <h3><small>Getting errors? Make sure you are a member of the <a href="http://github.com/PrincetonRidgeHA">PrincetonRidgeHA</a> organization on GitHub.<small></h3>
         <br />
-        <div class="input-control text full-size" data-role="input">
-            <label for="user_login">Username:</label>
-            <input type="text" name="user_login" id="user_login">
-            <button class="button helper-button clear"><span class="mif-cross"></span></button>
-        </div>
-        <br />
-        <br />
-        <div class="input-control password full-size" data-role="input">
-            <label for="user_password">Password:</label>
-            <input type="password" name="user_password" id="user_password">
-            <button class="button helper-button reveal"><span class="mif-looks"></span></button>
-        </div>
-        <br />
-        <br />
         <div class="form-actions">
-            <button type="submit" class="button primary"><span class="mif-github mif-lg"></span> Login</button>
+            <a type="button" class="btn btn-primary" href="https://github.com/login/oauth/authorize?scope=read:org&client_id=#{@gitid}"><span class="mif-github mif-lg"></span> Login</a>
         </div>
     </form>
 </div>
