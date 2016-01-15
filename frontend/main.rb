@@ -228,7 +228,7 @@ get '/admin/login' do
   @gitid = ENV['GITHUB_CLIENT_ID']
   slim :admin_login
 end
-post '/admin/oauth/v2/github/callback' do
+get '/admin/oauth/v2/github/callback' do
   # get temporary GitHub code...
   session_code = request.env['rack.request.query_hash']['code']
 
