@@ -8,5 +8,3 @@
 [![Gratipay](https://img.shields.io/gratipay/ARMmaster17.svg)](http://gratipay.com/~ARMmaster17)
 
 Official website for Princeton Ridge Homeowners Association.
-
-TODO: Link to contributing file.
