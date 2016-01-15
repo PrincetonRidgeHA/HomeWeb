@@ -172,31 +172,48 @@ get '/test/:key/resetauth' do
     redirect '/'
   end
 end
-get '/secured/members/:page' do
+get '/secured/members/home' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @notif = Notifications.get_all()
   @cssimport = Array.new
   @cssimport.push '/src/css/admin/dashboard.css'
   @style = 'bootstrap'
-  if(params[:page] == 'home')
-    @PageTitle = "Home - Residents Dashboard"
-    slim :member_home
-  elsif(params[:page] == 'residents')
-    @PageTitle = "Directory - Residents Dashboard"
-    @items = Residents.all.order(:name)
-    slim :member_directory
-  elsif(params[:page] == 'docs')
-    @PageTitle = "Documents - Residents Dashboard"
-    @items = Docs.all.order(uploaddate: :desc)
-    slim :member_docs
-  elsif(params[:page] == 'yom')
-    @PageTitle = "Yard of the Month - Residents Dashboard"
-    @items = Yardwinners.all.order(:id)
-    slim :member_yom
-  else
-    redirect '/secured/members/home'
-  end
+  @PageTitle = "Home - Residents Dashboard"
+  slim :member_home
+end
+get '/secured/members/residents' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  @cssimport = Array.new
+  @cssimport.push '/src/css/admin/dashboard.css'
+  @style = 'bootstrap'
+  @PageTitle = "Directory - Residents Dashboard"
+  @items = Residents.all.order(:name)
+  slim :member_directory
+end
+get '/secured/members/docs' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  @cssimport = Array.new
+  @cssimport.push '/src/css/admin/dashboard.css'
+  @style = 'bootstrap'
+  @PageTitle = "Documents - Residents Dashboard"
+  @items = Docs.all.order(uploaddate: :desc)
+  slim :member_docs
+end
+get '/secured/members/yom' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  @cssimport = Array.new
+  @cssimport.push '/src/css/admin/dashboard.css'
+  @style = 'bootstrap'
+  @PageTitle = "Yard of the Month - Residents Dashboard"
+  @items = Yardwinners.all.order(:id)
+  slim :member_yom
 end
 get '/admin' do
   redirect '/admin/login'
@@ -211,9 +228,6 @@ get '/admin/login' do
   slim :admin_login
 end
 post '/admin/oauth/v2/github/callback' do
-  # client = Octokit::Client.new(:login => params['user_login'], :password => params['user_password'])
-  # Fetch the current user
-  # client.user
   session[:adminauth] = true
   session[:admin_username] = params['user_login']
   session[:admin_secret] = params['user_password']
