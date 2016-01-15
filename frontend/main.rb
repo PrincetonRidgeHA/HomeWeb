@@ -24,9 +24,8 @@ set :bind, ENV['IP'] || '0.0.0.0'
 enable :sessions
 
 helpers do
-  def partial(template, locals = {})
-    slim template, :layout => false, :locals => locals
-  end
+  ##
+  # Defines if current user is logged in
   def login?
     if ENV['CI']
       return true
@@ -36,6 +35,8 @@ helpers do
       return true
     end
   end
+  ##
+  # Defines if current user is logged in through OAuth GitHub gateway
   def adminlogin?
     if ENV['CI']
       return true
@@ -45,12 +46,11 @@ helpers do
       return true
     end
   end
-  def prtl(template, context = nil)
-    Slim::Template.new { template }.render(context)
-  end
 end
-
+##
+# Route handler for home page
 get '/' do
+  # Transfer all locals to instance variables
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Home"
   @notif = Notifications.get_all()
@@ -58,12 +58,10 @@ get '/' do
   @cssimport = Array.new
   @cssimport.push('/src/css/home.css')
   @style = 'bootstrap'
+  # Retrieve Yard of the Month data
   yom_max_year = 1990
   yom_max_month = 0
   @yom_image = "http://princetonridge.com/Entry.JPG"
-  # @yom_name = "Error"
-  # @yom_addr_short = "Error"
-  # @yom_month = "Error"
   Yardwinners.all.each do |item|
     if(item.year > yom_max_year)
       yom_max_year = item.year
@@ -83,17 +81,24 @@ get '/' do
       end
     end
   end
+  # Use generic image if none exists
   if(@yom_image == '#')
     @yom_image = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
   end
   slim :home
 end
+##
+# Route handler for contact page
 get '/contact' do
   @notif = Notifications.get_all()
   @cssimport = Array.new
   @style = 'bootstrap'
   slim :bugreport
 end
+##
+# Route handler for POST to contact page
+#
+# Sends data to Mailer class
 post '/contact' do
   @notif = Notifications.get_all()
   @cssimport = Array.new
@@ -102,6 +107,8 @@ post '/contact' do
   Mailer.send(Pagevars.set_vars("ADMINMAIL"), "AUTO: PRHA bug report", params[:msgbody])
   redirect '/'
 end
+##
+# Route handler for login page
 get '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -118,6 +125,8 @@ get '/login' do
     slim :error
   end
 end
+##
+# Authenticicates user and sets up session keys
 post '/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -142,6 +151,8 @@ post '/login' do
     end
   end
 end
+##
+# Route handler for specific news article
 get '/news/:id' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @notif = Notifications.get_all()
@@ -153,6 +164,8 @@ get '/news/:id' do
   @PageTitle = "#{@article.title} - News"
   slim :news_article
 end
+##
+# Route handler for news feed page
 get '/news' do
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @notif = Notifications.get_all()
@@ -164,6 +177,8 @@ get '/news' do
   @articles = News.all.order(uploaddate: :desc)
   slim :news
 end
+##
+# Route handler for resetting login block (RACK_ENV:TEST only!)
 get '/test/:key/resetauth' do
   if(params[:key] == 'PRHAKEY')
     session[:authtries] = 0
@@ -172,6 +187,8 @@ get '/test/:key/resetauth' do
     redirect '/'
   end
 end
+##
+# Route handler for home page of members dashboard
 get '/secured/members/home' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -182,6 +199,8 @@ get '/secured/members/home' do
   @PageTitle = "Home - Residents Dashboard"
   slim :member_home
 end
+##
+# Route handler for resident directory of members dashboard
 get '/secured/members/residents' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -193,6 +212,8 @@ get '/secured/members/residents' do
   @items = Residents.all.order(:name)
   slim :member_directory
 end
+##
+# Route handler for documents list of members dashboard
 get '/secured/members/docs' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -204,6 +225,8 @@ get '/secured/members/docs' do
   @items = Docs.all.order(uploaddate: :desc)
   slim :member_docs
 end
+##
+# Route handler for YOM winners of members dashboard
 get '/secured/members/yom' do
   redirect '/login' unless login?
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -215,9 +238,14 @@ get '/secured/members/yom' do
   @items = Yardwinners.all.order(:id)
   slim :member_yom
 end
+##
+# Redirects user to login page, or dashboard if logged in
 get '/admin' do
-  redirect '/admin/login'
+  redirect '/admin/login' unless adminlogin?
+  redirect '/admin/dashboard'
 end
+##
+# Route handler for admin login
 get '/admin/login' do
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -228,6 +256,10 @@ get '/admin/login' do
   @gitid = ENV['GITHUB_CLIENT_ID']
   slim :admin_login
 end
+##
+# Route handler for OAuth logins
+#
+# Normally only called by GitHub API after '/admin/login' redirect
 get '/admin/oauth/v2/github/callback' do
   # get temporary GitHub code...
   session_code = request.env['rack.request.query_hash']['code']
@@ -249,10 +281,14 @@ get '/admin/oauth/v2/github/callback' do
   session[:admin_profilepic] = auth_result['avatar_url']
   redirect '/admin/dashboard'
 end
+##
+# Redirects to admin dashboard home
 get '/admin/dashboard' do
   redirect '/admin/login' unless adminlogin?
   redirect '/admin/dashboard/home'
 end
+##
+# Route handler for admin dashboard home
 get '/admin/dashboard/home' do
   redirect '/admin/login' unless adminlogin?
   @notif = Notifications.get_all()
@@ -264,6 +300,8 @@ get '/admin/dashboard/home' do
   @style = 'metro'
   slim :admin_dashboard
 end
+##
+# Route handler for admin dashboard YOM data view
 get '/admin/dashboard/data/yom' do
   redirect '/admin/login' unless adminlogin?
   # Global page parameters
@@ -285,6 +323,8 @@ get '/admin/dashboard/data/yom' do
   @items = Yardwinners.all.order(:id)
   slim :admin_data_yom
 end
+##
+# Route handler for POST to admin dashboard YOM data view
 post '/admin/dashboard/data/yom' do
   redirect '/admin/login' unless adminlogin?
   #perform operation with data
@@ -331,6 +371,8 @@ post '/admin/dashboard/data/yom' do
   @items = Yardwinners.all.order(:id)
   slim :admin_data_yom
 end
+##
+# Route handler for admin dashboard resident directory data view
 get '/admin/dashboard/data/rd' do
   redirect '/admin/login' unless adminlogin?
   # Global page parameters
@@ -352,6 +394,8 @@ get '/admin/dashboard/data/rd' do
   @items = Residents.all.order(:name)
   slim :admin_data_rd
 end
+##
+# Route handler for POST to admin dashboard resident directory data view
 post '/admin/dashboard/data/rd' do
   redirect '/admin/login' unless adminlogin?
   #perform operation with data
@@ -397,6 +441,8 @@ post '/admin/dashboard/data/rd' do
   @items = Residents.all.order(:name)
   slim :admin_data_rd
 end
+##
+# Route handler for admin dashboard document list data view
 get '/admin/dashboard/data/docs' do
   redirect '/admin/login' unless adminlogin?
   # Global page parameters
@@ -418,6 +464,8 @@ get '/admin/dashboard/data/docs' do
   @items = Docs.all
   slim :admin_data_docs
 end
+##
+# Route handler for POST to admin dashboard document list data view
 post '/admin/dashboard/data/docs' do
   redirect '/admin/login' unless adminlogin?
   #perform operation with data
@@ -463,6 +511,8 @@ post '/admin/dashboard/data/docs' do
   @items = Docs.all
   slim :admin_data_docs
 end
+##
+# Route handler for admin dashboard news listing data view
 get '/admin/dashboard/data/news' do
   redirect '/admin/login' unless adminlogin?
   # Global page parameters
@@ -484,6 +534,8 @@ get '/admin/dashboard/data/news' do
   @items = News.all.order(:id)
   slim :admin_data_news
 end
+##
+# Route handler for POST to admin dashboard news listing data view
 post '/admin/dashboard/data/news' do
   redirect '/admin/login' unless adminlogin?
   #perform operation with data
@@ -529,6 +581,8 @@ post '/admin/dashboard/data/news' do
   @items = News.all.order(:id)
   slim :admin_data_news
 end
+##
+# Route handler for CSV file output of allowed data structures
 get '/raw/protected/:item.csv' do
   redirect '/login' unless login?
   response.headers['content_type'] = "application/octet-stream"

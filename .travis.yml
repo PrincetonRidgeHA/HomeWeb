@@ -25,13 +25,11 @@ addons:
 install:
   - bundle install
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - ./scripts/beforescript.sh
 script:
-  - echo 'Configuring JIT variables...'
-  - sed 's/TRAVISCOMMIT/'$TRAVIS_COMMIT'/' ./frontend/builddata.partial.rb > ./frontend/builddata.partial2.rb
-  - sed 's/TRAVISBUILD/'$TRAVIS_BUILD_NUMBER'/' ./frontend/builddata.partial2.rb > ./frontend/inc/builddata.rb
-  #- head ./inc/builddata.rb
+  - ./scripts/builddata.sh
   - rake test --trace
+  - ./scripts/gendocs.sh
 deploy:
   provider: heroku
   api_key: "9951e24c-b489-48fe-8a60-b325e8d850dd"

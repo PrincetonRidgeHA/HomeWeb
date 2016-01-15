@@ -1,3 +1,5 @@
 *.md
 /testing/
 .travis.yml
+/doc/
+/.c9/
