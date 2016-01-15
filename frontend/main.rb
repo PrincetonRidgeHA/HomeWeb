@@ -245,14 +245,16 @@ get '/admin/oauth/v2/github/callback' do
                                         {:params => {:access_token => access_token}}))
   session[:adminauth] = true
   session[:adminkey] = access_token
-  session[:admin_username] = auth_result.login
-  session[:admin_profilepic] = auth_result.avatar_url
+  session[:admin_username] = auth_result['login']
+  session[:admin_profilepic] = auth_result['avatar_url']
   redirect '/admin/dashboard'
 end
 get '/admin/dashboard' do
+  redirect '/admin/login' unless adminlogin?
   redirect '/admin/dashboard/home'
 end
 get '/admin/dashboard/home' do
+  redirect '/admin/login' unless adminlogin?
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
   @PageTitle = "Administration"
@@ -263,6 +265,7 @@ get '/admin/dashboard/home' do
   slim :admin_dashboard
 end
 get '/admin/dashboard/data/yom' do
+  redirect '/admin/login' unless adminlogin?
   # Global page parameters
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -283,6 +286,7 @@ get '/admin/dashboard/data/yom' do
   slim :admin_data_yom
 end
 post '/admin/dashboard/data/yom' do
+  redirect '/admin/login' unless adminlogin?
   #perform operation with data
   if(params['operation'] == 'Update')
     opdata = Yardwinners.find(params['yardwinnerdata']['id'])
@@ -328,6 +332,7 @@ post '/admin/dashboard/data/yom' do
   slim :admin_data_yom
 end
 get '/admin/dashboard/data/rd' do
+  redirect '/admin/login' unless adminlogin?
   # Global page parameters
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -348,6 +353,7 @@ get '/admin/dashboard/data/rd' do
   slim :admin_data_rd
 end
 post '/admin/dashboard/data/rd' do
+  redirect '/admin/login' unless adminlogin?
   #perform operation with data
   if(params['operation'] == 'Update')
     opdata = Residents.find(params['rdd']['id'])
@@ -393,6 +399,7 @@ post '/admin/dashboard/data/rd' do
   slim :admin_data_rd
 end
 get '/admin/dashboard/data/docs' do
+  redirect '/admin/login' unless adminlogin?
   # Global page parameters
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -413,6 +420,7 @@ get '/admin/dashboard/data/docs' do
   slim :admin_data_docs
 end
 post '/admin/dashboard/data/docs' do
+  redirect '/admin/login' unless adminlogin?
   #perform operation with data
   if(params['operation'] == 'Update')
     opdata = Docs.find(params['doc']['id'])
@@ -457,6 +465,7 @@ post '/admin/dashboard/data/docs' do
   slim :admin_data_docs
 end
 get '/admin/dashboard/data/news' do
+  redirect '/admin/login' unless adminlogin?
   # Global page parameters
   @notif = Notifications.get_all()
   @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
@@ -477,6 +486,7 @@ get '/admin/dashboard/data/news' do
   slim :admin_data_news
 end
 post '/admin/dashboard/data/news' do
+  redirect '/admin/login' unless adminlogin?
   #perform operation with data
   if(params['operation'] == 'Update')
     opdata = News.find(params['newsdata']['id'])
