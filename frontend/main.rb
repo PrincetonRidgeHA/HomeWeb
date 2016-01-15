@@ -368,7 +368,6 @@ post '/admin/dashboard/data/rd' do
       transmessage = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
-    idct = 0;
     params['rdd']['id'] = Residents.count
     begin
       red = Residents.new(params['rdd'])

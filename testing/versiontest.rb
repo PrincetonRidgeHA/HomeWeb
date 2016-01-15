@@ -46,13 +46,19 @@ class TestVersion < Test::Unit::TestCase
     get '/admin/dashboard/home'
     assert last_response.ok?
   end
-  def test_PADM_data
+  def test_PADM_data_yom
     get '/admin/dashboard/data/yom'
     assert last_response.ok?
+  end
+  def test_PADM_data_rd
     get '/admin/dashboard/data/rd'
     assert last_response.ok?
+  end
+  def test_PADM_data_docs
     get '/admin/dashboard/data/docs'
     assert last_response.ok?
+  end
+  def test_PADM_data_news
     get '/admin/dashboard/data/news'
     assert last_response.ok?
   end
