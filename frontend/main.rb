@@ -214,7 +214,8 @@ get '/secured/members/residents' do
   if(!params['pg'])
     start_index = 0
   else
-    start_index = params['pg'] * 10
+    start_index = params['pg'].to_i * 10
+    start_index -= 10
     if(start_index > Residents.count)
       redirect '/secured/members/residents?pg=0'
     end
