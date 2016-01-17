@@ -31,6 +31,10 @@
                   </tr>
               </tbody>
             </table>
+            <ul class="pagination">
+              - for x in 1..@num_pages
+                <li><a href="/secured/members/residents?pg=#{x}">#{x}</a></li>
+            </ul>
             <a onclick="showDisclaimer()">Export as CSV</a>
           </div>
         </div>

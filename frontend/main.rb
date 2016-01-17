@@ -209,7 +209,21 @@ get '/secured/members/residents' do
   @cssimport.push '/src/css/admin/dashboard.css'
   @style = 'bootstrap'
   @PageTitle = "Directory - Residents Dashboard"
-  @items = Residents.all.order(:name)
+  # Calculate pagination parameters
+  start_index = 0
+  if(!params['pg'])
+    start_index = 0
+  else
+    start_index = params['pg'] * 10
+    if(start_index > Residents.count)
+      redirect '/secured/members/residents?pg=0'
+    end
+  end
+  @items = Residents.all.order(:name).limit(10).offset(start_index)
+  @num_pages = Residents.count / 10
+  if(Residents.count % 10 > 0)
+    @num_pages += 1
+  end
   slim :member_directory
 end
 ##
