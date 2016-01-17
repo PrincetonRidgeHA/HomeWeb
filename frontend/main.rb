@@ -211,10 +211,13 @@ get '/secured/members/residents' do
   @PageTitle = "Directory - Residents Dashboard"
   # Calculate pagination parameters
   start_index = 0
+  @current_page = 0
   if(!params['pg'])
     start_index = 0
+    @current_page = 1
   else
     start_index = params['pg'].to_i * 10
+    @current_page = params['pg'].to_i
     start_index -= 10
     if(start_index > Residents.count)
       redirect '/secured/members/residents?pg=0'

@@ -33,7 +33,10 @@
             </table>
             <ul class="pagination">
               - for x in 1..@num_pages
-                <li><a href="/secured/members/residents?pg=#{x}">#{x}</a></li>
+                - if x == @current_page
+                  <li class="active"><a href="/secured/members/residents?pg=#{x}">#{x}</a></li>
+                - else
+                  <li><a href="/secured/members/residents?pg=#{x}">#{x}</a></li>
             </ul>
             <a onclick="showDisclaimer()">Export as CSV</a>
           </div>
