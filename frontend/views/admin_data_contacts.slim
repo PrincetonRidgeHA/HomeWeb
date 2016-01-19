@@ -1,0 +1,79 @@
+== slim :_partial_admin_navigation
+<div class="page-content">
+    <div class="flex-grid no-responsive-future" style="height: 100%;">
+        <div class="row" style="height: 100%">
+            == slim :_partial_admin_sidebar
+            <div class="cell auto-size padding20 bg-white" id="cell-content">
+                <h1 class="text-light">Contacts (#{@contactscount})</h1>
+                <hr class="thin bg-grayLighter">
+                <table class="table striped hovered cell-hovered border bordered">
+                    <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Title</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        - @items.each do |item|
+                          <form action="/admin/dashboard/data/contacts" method="POST">
+                              <tr>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[id]" readonly value="#{item.id}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[title]" value="#{item.title}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[name]" value="#{item.name}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[email]" value="#{item.email}">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <input class="button primary" type="submit" name="operation" value="Update" />
+                                      <input class="button danger" type="submit" name="operation" value="Delete" />
+                                  </td>
+                              </tr>
+                          </form>
+                        <form action="/admin/dashboard/data/contacts" method="POST">
+                              <tr>
+                                  <td>
+                                      
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[title]" placeholder="ACC President">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[name]" placeholder="John Smith">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div class="input-control text">
+                                        <input type="text" name="condata[email]" placeholder="user@example.com">
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <input class="button success" type="submit" name="operation" value="Create" />
+                                  </td>
+                              </tr>
+                        </form>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

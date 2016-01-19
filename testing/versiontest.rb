@@ -42,6 +42,10 @@ class TestVersion < Test::Unit::TestCase
     get '/secured/members/yom'
     assert last_response.ok?
   end
+  def test_PROT_contacts
+    get '/secured/members/contacts'
+    assert last_response.ok?
+  end
   def test_PADM_dashboard_static
     get '/admin/dashboard/home'
     assert last_response.ok?

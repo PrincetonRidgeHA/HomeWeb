@@ -13,6 +13,7 @@ require_relative 'models/residents.rb'
 require_relative 'models/docs.rb'
 require_relative 'models/yard_winners.rb'
 require_relative 'models/news.rb'
+require_relative 'models/contacts.rb'
 require_relative 'inc/pagevars'
 require_relative 'inc/mailer'
 require_relative 'inc/dateservice'
@@ -289,6 +290,19 @@ get '/secured/members/yom' do
     @num_pages += 1
   end
   slim :member_yom
+end
+##
+# Route handler for contacts page of members dashboard
+get '/secured/members/contacts' do
+  redirect '/login' unless login?
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @notif = Notifications.get_all()
+  @cssimport = Array.new
+  @cssimport.push '/src/css/admin/dashboard.css'
+  @style = 'bootstrap'
+  @PageTitle = "Contacts - Residents Dashboard"
+  @items = Contacts.all.order(:id)
+  slim :member_contacts
 end
 ##
 # Redirects user to login page, or dashboard if logged in
@@ -632,6 +646,77 @@ post '/admin/dashboard/data/news' do
   # Page specific data
   @items = News.all.order(:id)
   slim :admin_data_news
+end
+##
+# Route handler for admin dashboard contacts data view
+get '/admin/dashboard/data/contacts' do
+  redirect '/admin/login' unless adminlogin?
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Contacts"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  @newscount = News.count
+  @contactscount = Contacts.count
+  # Page specific data
+  @items = Contacts.all.order(:id)
+  slim :admin_data_contacts
+end
+##
+# Route handler for POST to admin dashboard contacts data view
+post '/admin/dashboard/data/contacts' do
+  redirect '/admin/login' unless adminlogin?
+  #perform operation with data
+  if(params['operation'] == 'Update')
+    opdata = Contacts.find(params['condata']['id'])
+    opdata.title = params['condata']['title']
+    opdata.name = params['condata']['name']
+    opdata.email = params['condata']['email']
+    begin
+      opdata.save
+      transmessage = 'Record updated.'
+    rescue
+      transmessage = 'Record update failed!'
+    end
+  elsif(params['operation'] == 'Create')
+    begin
+      params['condata']['id'] = News.count
+      newsobj = Contacts.new(params['condata'])
+	    newsobj.save
+	    transmessage = 'Record added.'
+    rescue
+      transmessage = 'Record add failed!'
+    end
+  end
+  # Global page parameters
+  @notif = Notifications.get_all()
+  @notif.push(transmessage)
+  @TRAVISBUILDNUMBER = Pagevars.set_vars("CIbuild")
+  @PageTitle = "Contacts"
+  # Styling
+  @cssimport = Array.new
+  @cssimport.push('/src/css/admin/dashboard.css')
+  @style = 'metro'
+  # Admin dashboard parameters
+  @admin_uname = session[:admin_username]
+  # Data page information
+  @yomcount = Yardwinners.count
+  @rdcount = Residents.count
+  @docscount = Docs.count
+  @newscount = News.count
+  @contactscount = Contacts.count
+  # Page specific data
+  @items = Contacts.all.order(:id)
+  slim :admin_data_contacts
 end
 ##
 # Route handler for CSV file output of allowed data structures

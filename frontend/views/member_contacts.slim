@@ -1,0 +1,33 @@
+    == slim :_partial_dashboard_navigation
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="page-header">Contacts</h1>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                - @items.each do |item|
+                  <tr>
+                    <td>
+                      =item.title
+                    </td>
+                    <td>
+                      =item.name
+                    </td>
+                    <td>
+                      =item.email
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
