@@ -16,3 +16,4 @@ gem 'codacy-coverage', group: :test, require: nil
 gem "activerecord"
 gem "sinatra-activerecord"
 gem "pg"
+gem 'newrelic_rpm'
