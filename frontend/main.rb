@@ -256,7 +256,7 @@ get '/secured/members/docs' do
   @items = Docs.all.order(uploaddate: :desc).limit(10).offset(start_index)
   @num_pages = Docs.count / 10
   if(Docs.count % 10 > 0)
-    @numpages += 1
+    @num_pages += 1
   end
   slim :member_docs
 end
@@ -284,6 +284,10 @@ get '/secured/members/yom' do
     end
   end
   @items = Yardwinners.all.order(:id).limit(10).offset(start_index)
+  @num_pages = Yardwinners.count / 10
+  if(Yardwinners.count % 10 > 0)
+    @num_pages += 1
+  end
   slim :member_yom
 end
 ##
