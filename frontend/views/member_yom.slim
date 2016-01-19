@@ -30,6 +30,13 @@
                   </tr>
               </tbody>
             </table>
+            <ul class="pagination">
+              - for x in 1..@num_pages
+                - if x == @current_page
+                  <li class="active"><a href="/secured/members/yom?pg=#{x}">#{x}</a></li>
+                - else
+                  <li><a href="/secured/members/yom?pg=#{x}">#{x}</a></li>
+            </ul>
           </div>
         </div>
       </div>
