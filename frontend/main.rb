@@ -220,7 +220,7 @@ get '/secured/members/residents' do
     @current_page = params['pg'].to_i
     start_index -= 10
     if(start_index > Residents.count)
-      redirect '/secured/members/residents?pg=0'
+      redirect '/secured/members/residents'
     end
   end
   @items = Residents.all.order(:name).limit(10).offset(start_index)
@@ -240,7 +240,24 @@ get '/secured/members/docs' do
   @cssimport.push '/src/css/admin/dashboard.css'
   @style = 'bootstrap'
   @PageTitle = "Documents - Residents Dashboard"
-  @items = Docs.all.order(uploaddate: :desc)
+  # Calculate pagination parameters
+  start_index = 0
+  if(!params['pg'])
+    start_index = 0
+    @current_page = 1
+  else
+    start_index = params['pg'].to_i * 10
+    @current_page = params['pg'].to_i
+    start_index -= 10
+    if(start_index > Docs.count)
+      redirect '/secured/members/docs'
+    end
+  end
+  @items = Docs.all.order(uploaddate: :desc).limit(10).offset(start_index)
+  @num_pages = Docs.count / 10
+  if(Docs.count % 10 > 0)
+    @numpages += 1
+  end
   slim :member_docs
 end
 ##
@@ -253,7 +270,20 @@ get '/secured/members/yom' do
   @cssimport.push '/src/css/admin/dashboard.css'
   @style = 'bootstrap'
   @PageTitle = "Yard of the Month - Residents Dashboard"
-  @items = Yardwinners.all.order(:id)
+  # Calculate pagination parameters
+  start_index = 0
+  if(!params['pg'])
+    start_index = 0
+    @current_page = 1
+  else
+    start_index = params['pg'].to_i * 10
+    @current_page = params['pg'].to_i
+    start_index -= 10
+    if(start_index > Yardwinners.count)
+      redirect '/secured/members/yom'
+    end
+  end
+  @items = Yardwinners.all.order(:id).limit(10).offset(start_index)
   slim :member_yom
 end
 ##
