@@ -19,6 +19,7 @@ require_relative 'inc/pagevars'
 require_relative 'inc/mailer'
 require_relative 'inc/dateservice'
 require_relative 'inc/viewdata'
+require_relative 'inc/pagination'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
@@ -156,25 +157,8 @@ get '/secured/members/residents' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Resident Directory')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
-  # Calculate pagination parameters
-  start_index = 0
-  @current_page = 0
-  if(!params['pg'])
-    start_index = 0
-    @current_page = 1
-  else
-    start_index = params['pg'].to_i * 10
-    @current_page = params['pg'].to_i
-    start_index -= 10
-    if(start_index > Residents.count)
-      redirect '/secured/members/residents'
-    end
-  end
-  @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(start_index))
-  @num_pages = Residents.count / 10
-  if(Residents.count % 10 > 0)
-    @num_pages += 1
-  end
+  @pagination = Pagination.new(Residents.count, params['pg'])
+  @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(@pagination.start_index))
   slim :member_directory
 end
 ##
@@ -183,24 +167,8 @@ get '/secured/members/docs' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Documents')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
-  # Calculate pagination parameters
-  start_index = 0
-  if(!params['pg'])
-    start_index = 0
-    @current_page = 1
-  else
-    start_index = params['pg'].to_i * 10
-    @current_page = params['pg'].to_i
-    start_index -= 10
-    if(start_index > Docs.count)
-      redirect '/secured/members/docs'
-    end
-  end
-  @items = Docs.all.order(uploaddate: :desc).limit(10).offset(start_index)
-  @num_pages = Docs.count / 10
-  if(Docs.count % 10 > 0)
-    @num_pages += 1
-  end
+  @pagination = Pagination.new(Docs.count, params['pg'])
+  @items = Docs.all.order(uploaddate: :desc).limit(10).offset(@pagination.start_index)
   slim :member_docs
 end
 ##
@@ -209,24 +177,8 @@ get '/secured/members/yom' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Yard of the Month')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
-  # Calculate pagination parameters
-  start_index = 0
-  if(!params['pg'])
-    start_index = 0
-    @current_page = 1
-  else
-    start_index = params['pg'].to_i * 10
-    @current_page = params['pg'].to_i
-    start_index -= 10
-    if(start_index > Yardwinners.count)
-      redirect '/secured/members/yom'
-    end
-  end
-  @items = Yardwinners.all.order(:id).limit(10).offset(start_index)
-  @num_pages = Yardwinners.count / 10
-  if(Yardwinners.count % 10 > 0)
-    @num_pages += 1
-  end
+  @pagination = Pagination.new(Yardwinners.count, params['pg'])
+  @items = Yardwinners.all.order(:id).limit(10).offset(@pagination.start_index)
   slim :member_yom
 end
 ##

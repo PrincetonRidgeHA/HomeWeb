@@ -32,8 +32,8 @@
               </tbody>
             </table>
             <ul class="pagination">
-              - for x in 1..@num_pages
-                - if x == @current_page
+              - for x in 1..@pagination.get_num_pages
+                - if x == @pagination.get_current_page
                   <li class="active"><a href="/secured/members/residents?pg=#{x}">#{x}</a></li>
                 - else
                   <li><a href="/secured/members/residents?pg=#{x}">#{x}</a></li>
