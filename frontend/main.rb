@@ -158,7 +158,7 @@ get '/secured/members/residents' do
   @view_data = ViewData.new('bootstrap_v3', 'Resident Directory')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @pagination = Pagination.new(Residents.count, params['pg'])
-  @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(@pagination.start_index))
+  @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(@pagination.get_start_index))
   slim :member_directory
 end
 ##
@@ -168,7 +168,7 @@ get '/secured/members/docs' do
   @view_data = ViewData.new('bootstrap_v3', 'Documents')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @pagination = Pagination.new(Docs.count, params['pg'])
-  @items = Docs.all.order(uploaddate: :desc).limit(10).offset(@pagination.start_index)
+  @items = Docs.all.order(uploaddate: :desc).limit(10).offset(@pagination.get_start_index)
   slim :member_docs
 end
 ##
@@ -178,7 +178,7 @@ get '/secured/members/yom' do
   @view_data = ViewData.new('bootstrap_v3', 'Yard of the Month')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @pagination = Pagination.new(Yardwinners.count, params['pg'])
-  @items = Yardwinners.all.order(:id).limit(10).offset(@pagination.start_index)
+  @items = Yardwinners.all.order(:id).limit(10).offset(@pagination.get_start_index)
   slim :member_yom
 end
 ##
