@@ -119,7 +119,7 @@ end
 # Route handler for specific news article
 get '/news/:id' do
   article = News.find(params[:id])
-  @view_data = ViewData.new('bootstrap', '#{article.title} - News')
+  @view_data = ViewData.new('bootstrap', article.title + ' - News')
   @view_data.add_css_url('/src/css/home.css')
   @view_data.set_var('article', article)
   slim :news_article
