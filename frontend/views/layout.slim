@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    title #{@view_data.get_page_name} - PRHA
+    <title>#{@view_data.get_page_name} - PRHA</title>
     <meta name="description" content="PRHA official website">
     <meta name="author" content="Joshua Zenn">
     <!--<link rel="icon" href="../../favicon.ico">-->
@@ -26,7 +26,7 @@
           toastr.options = {
           "closeButton": true
           }
-          toastr.info('#{t.title}<br>#{t.msg}');
+          toastr.info('#{t.to_s}');
     - if @view_data.get_style_name == 'metro'
       - @view_data.get_notifications.each do |t|
         javascript:
