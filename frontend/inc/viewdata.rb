@@ -10,6 +10,7 @@ class ViewData
        @page_style = page_style
        @page_name = page_name
        @css_urls = Array.new
+       @js_urls = Array.new
        @data_hash = Hash.new
    end
    def get_travis_build_id()
@@ -35,8 +36,11 @@ class ViewData
    def add_css_url(url)
       @css_urls.push(url)
    end
+   def add_js_url(url)
+      @js_urls.push(url)
+   end
    def get_js_urls()
-      js_urls = Array.new
+      js_urls = @js_urls
       js_urls.push('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
       js_urls.push('http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js')
       js_urls.push('http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js')

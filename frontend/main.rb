@@ -157,6 +157,7 @@ get '/secured/members/residents' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Resident Directory')
   @view_data.add_css_url('/src/css/admin/dashboard.css')
+  @view_data.add_js_url('/src/js/member/disclaimer.js')
   @pagination = Pagination.new(Residents.count, params['pg'])
   @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(@pagination.get_start_index))
   slim :member_directory
