@@ -1,9 +1,9 @@
 == slim :_partial_news_navigation
 <div class="container marketing">
   <hr id="feature-start" class="featurette-divider">
-  <h1>#{@article.title}</h1>
-  <h6>#{@article.uploaddate} - #{@article.uploadedby}</h6>
-  <p>#{@article.content}</p>
+  <h1>#{@view_data.get_var('article').title}</h1>
+  <h6>#{@view_data.get_var('article').uploaddate} - #{@view_data.get_var('article').uploadedby}</h6>
+  <p>#{@view_data.get_var('article').content}</p>
   <hr class="featurette-divider">
   <footer class="footer">
     <p class="pull-right"><img src="https://img.shields.io/github/license/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/github/tag/PrincetonRidgeHA/HomeWeb.svg?style=flat-square" /> | <img src="https://img.shields.io/travis/PrincetonRidgeHA/HomeWeb/master.svg?style=flat-square" /></p>
