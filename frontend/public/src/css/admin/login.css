@@ -9,5 +9,6 @@
     background-color: #ffffff;
     opacity: 0;
     -webkit-transform: scale(.8);
+    -moz-transform: scale(.8);
     transform: scale(.8);
 }
