@@ -257,6 +257,7 @@ get '/admin/dashboard/data/yom' do
   @rdcount = Residents.count
   @docscount = Docs.count
   @newscount = News.count
+  @contactscount = Contacts.count
   # Page specific data
   @items = Yardwinners.all.order(:id)
   slim :admin_data_yom
@@ -303,6 +304,7 @@ get '/admin/dashboard/data/rd' do
   @rdcount = Residents.count
   @docscount = Docs.count
   @newscount = News.count
+  @contactscount = Contacts.count
   # Page specific data
   @items = Residents.all.order(:name)
   slim :admin_data_rd
@@ -348,6 +350,7 @@ get '/admin/dashboard/data/docs' do
   @rdcount = Residents.count
   @docscount = Docs.count
   @newscount = News.count
+  @contactscount = Contacts.count
   # Page specific data
   @items = Docs.all
   slim :admin_data_docs
@@ -393,6 +396,7 @@ get '/admin/dashboard/data/news' do
   @rdcount = Residents.count
   @docscount = Docs.count
   @newscount = News.count
+  @contactscount = Contacts.count
   # Page specific data
   @items = News.all.order(:id)
   slim :admin_data_news
