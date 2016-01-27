@@ -86,6 +86,7 @@ end
 # Route handler for login page
 get '/login' do
   @view_data = ViewData.new('bootstrap_v3', 'Login')
+  @view_data.add_css_url('/src/css/login.css')
   if(session[:authtries] == nil)
     session[:authtries] = 0
     slim :login
