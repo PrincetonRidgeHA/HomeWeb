@@ -82,6 +82,6 @@ class TestVersion < Test::Unit::TestCase
   end
   def test_raw_residents
     get '/raw/protected/residents.csv'
-    assert last_response.content_type = 'application/octet-stream'
+    assert last_response.content_type == 'application/octet-stream'
   end
 end
