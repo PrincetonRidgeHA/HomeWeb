@@ -7,6 +7,7 @@ require 'json'
 require 'csv'
 require 'tilt/redcarpet'
 require 'sinatra/activerecord'
+require 'rack-flash'
 require 'newrelic_rpm'
 require_relative '../config/environments'
 require_relative 'inc/notifications'
@@ -26,6 +27,7 @@ set :bind, ENV['IP'] || '0.0.0.0'
 
 
 enable :sessions
+use Rack::Flash
 
 helpers do
   ##
@@ -55,7 +57,7 @@ end
 # Route handler for home page
 get '/' do
   # Transfer all locals to instance variables
-  @view_data = ViewData.new('bootstrap_v3', 'Home')
+  @view_data = ViewData.new('bootstrap_v3', 'Home', flash[:notice])
   @view_data.add_css_url('/src/css/home.css')
   # Retrieve Yard of the Month data
   current_winner = Yardwinners.all.order(month: :desc).limit(1).first
@@ -71,7 +73,7 @@ end
 ##
 # Route handler for contact page
 get '/contact' do
-  @view_data = ViewData.new('bootstrap_v3', "Contact")
+  @view_data = ViewData.new('bootstrap_v3', "Contact", flash[:notice])
   slim :bugreport
 end
 ##
@@ -85,7 +87,7 @@ end
 ##
 # Route handler for login page
 get '/login' do
-  @view_data = ViewData.new('bootstrap_v3', 'Login')
+  @view_data = ViewData.new('bootstrap_v3', 'Login', flash[:notice])
   @view_data.add_css_url('/src/css/login.css')
   if(session[:authtries] == nil)
     session[:authtries] = 0
@@ -120,7 +122,7 @@ end
 # Route handler for specific news article
 get '/news/:id' do
   article = News.find(params[:id])
-  @view_data = ViewData.new('bootstrap_v3', article.title + ' - News')
+  @view_data = ViewData.new('bootstrap_v3', article.title + ' - News', flash[:notice])
   @view_data.add_css_url('/src/css/home.css')
   @view_data.set_var('article', article)
   slim :news_article
@@ -129,7 +131,7 @@ end
 # Route handler for news feed page
 get '/news' do
   articles = News.all.order(uploaddate: :desc)
-  @view_data = ViewData.new('bootstrap_v3', 'News')
+  @view_data = ViewData.new('bootstrap_v3', 'News', flash[:notice])
   @view_data.add_css_url('/src/css/home.css')
   @view_data.set_var('articles', articles)
   slim :news
@@ -148,7 +150,7 @@ end
 # Route handler for home page of members dashboard
 get '/secured/members/home' do
   redirect '/login' unless login?
-  @view_data = ViewData.new('bootstrap_v3', 'Members Dashboard')
+  @view_data = ViewData.new('bootstrap_v3', 'Members Dashboard', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   slim :member_home
 end
@@ -156,7 +158,7 @@ end
 # Route handler for resident directory of members dashboard
 get '/secured/members/residents' do
   redirect '/login' unless login?
-  @view_data = ViewData.new('bootstrap_v3', 'Resident Directory')
+  @view_data = ViewData.new('bootstrap_v3', 'Resident Directory', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @view_data.add_js_url('/src/js/member/disclaimer.js')
   @pagination = Pagination.new(Residents.count, params['pg'])
@@ -167,7 +169,7 @@ end
 # Route handler for documents list of members dashboard
 get '/secured/members/docs' do
   redirect '/login' unless login?
-  @view_data = ViewData.new('bootstrap_v3', 'Documents')
+  @view_data = ViewData.new('bootstrap_v3', 'Documents', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @pagination = Pagination.new(Docs.count, params['pg'])
   @items = Docs.all.order(uploaddate: :desc).limit(10).offset(@pagination.get_start_index)
@@ -177,7 +179,7 @@ end
 # Route handler for YOM winners of members dashboard
 get '/secured/members/yom' do
   redirect '/login' unless login?
-  @view_data = ViewData.new('bootstrap_v3', 'Yard of the Month')
+  @view_data = ViewData.new('bootstrap_v3', 'Yard of the Month', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @pagination = Pagination.new(Yardwinners.count, params['pg'])
   @items = Yardwinners.all.order(:id).limit(10).offset(@pagination.get_start_index)
@@ -187,21 +189,15 @@ end
 # Route handler for contacts page of members dashboard
 get '/secured/members/contacts' do
   redirect '/login' unless login?
-  @view_data = ViewData.new('bootstrap_v3', 'Contacts')
+  @view_data = ViewData.new('bootstrap_v3', 'Contacts', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @items = Contacts.all.order(:id)
   slim :member_contacts
 end
 ##
-# Redirects user to login page, or dashboard if logged in
-get '/admin' do
-  redirect '/admin/login' unless adminlogin?
-  redirect '/admin/dashboard'
-end
-##
 # Route handler for admin login
 get '/admin/login' do
-  @view_data = ViewData.new('metro_v3', 'Administrator Login')
+  @view_data = ViewData.new('metro_v3', 'Administrator Login', flash[:notice])
   @view_data.add_css_url('/src/css/admin/login.css')
   @gitid = ENV['GITHUB_CLIENT_ID']
   slim :admin_login
@@ -229,6 +225,7 @@ get '/admin/oauth/v2/github/callback' do
   session[:adminkey] = access_token
   session[:admin_username] = auth_result['login']
   session[:admin_profilepic] = auth_result['avatar_url']
+  flash[:notice] = "Welcome back " + session[:admin_username]
   redirect '/admin/dashboard/home'
 end
 ##
@@ -236,7 +233,7 @@ end
 # Route handler for admin dashboard home
 get '/admin/dashboard/home' do
   redirect '/admin/login' unless adminlogin?
-  @view_data = ViewData.new('metro_v3', 'Dashboard')
+  @view_data = ViewData.new('metro_v3', 'Dashboard', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
   slim :admin_dashboard
@@ -245,7 +242,7 @@ end
 # Route handler for admin dashboard YOM data view
 get '/admin/dashboard/data/yom' do
   redirect '/admin/login' unless adminlogin?
-  @view_data = ViewData.new('metro_v3', 'Dashboard')
+  @view_data = ViewData.new('metro_v3', 'Dashboard', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
   # Data page information
@@ -272,18 +269,18 @@ post '/admin/dashboard/data/yom' do
     opdata.imgpath = params['yardwinnerdata']['imgpath']
     begin
       opdata.save
-      transmessage = 'Record updated.'
+      flash[:notify] = 'Record updated.'
     rescue
-      transmessage = 'Record update failed!'
+      flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
     begin
       params[:yardwinnerdata]['id'] = Yardwinners.count
       yomwinner = Yardwinners.new(params[:yardwinnerdata])
 	    yomwinner.save
-	    transmessage = 'Record added.'
+	    flash[:notify] = 'Record added.'
     rescue
-      transmessage = 'Record add failed!'
+      flash[:notify] = 'Record add failed!'
     end
   end
   redirect ' admin/dashboard/data/yom'
@@ -292,7 +289,7 @@ end
 # Route handler for admin dashboard resident directory data view
 get '/admin/dashboard/data/rd' do
   redirect '/admin/login' unless adminlogin?
-  @view_data = ViewData.new('metro_v3', 'Residents')
+  @view_data = ViewData.new('metro_v3', 'Residents', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
   # Data page information
@@ -318,18 +315,18 @@ post '/admin/dashboard/data/rd' do
     opdata.pnum = params['rdd']['pnum']
     begin
       opdata.save
-      transmessage = 'Record updated.'
+      flash[:notify] = 'Record updated.'
     rescue
-      transmessage = 'Record update failed!'
+      flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
     params['rdd']['id'] = Residents.count
     begin
       red = Residents.new(params['rdd'])
       red.save
-      transmessage = 'Record added.'
+      flash[:notify] = 'Record added.'
     rescue
-      transmessage = 'Record add failed!'
+      flash[:notify] = 'Record add failed!'
     end
   end
   redirect '/admin/dashboard/data/rd'
@@ -338,7 +335,7 @@ end
 # Route handler for admin dashboard document list data view
 get '/admin/dashboard/data/docs' do
   redirect '/admin/login' unless adminlogin?
-  @view_data = ViewData.new('metro_v3', 'Documents')
+  @view_data = ViewData.new('metro_v3', 'Documents', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
   # Data page information
@@ -364,18 +361,18 @@ post '/admin/dashboard/data/docs' do
     opdata.url = params['doc']['url']
     begin
       opdata.save
-      transmessage = 'Record updated.'
+      flash[:notify] = 'Record updated.'
     rescue
-      transmessage = 'Record update failed!'
+      flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
     params['doc']['id'] = Docs.count
     begin
       docdata = Docs.new(params['doc'])
       docdata.save
-      transmessage = 'Record added.'
+      flash[:notify] = 'Record added.'
     rescue
-      transmessage = 'Record add failed!'
+      flash[:notify] = 'Record add failed!'
     end
   end
   redirect '/admin/dashboard/data/docs'
@@ -384,7 +381,7 @@ end
 # Route handler for admin dashboard news listing data view
 get '/admin/dashboard/data/news' do
   redirect '/admin/login' unless adminlogin?
-  @view_data = ViewData.new('metro_v3', 'News')
+  @view_data = ViewData.new('metro_v3', 'News', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
   # Data page information
@@ -410,18 +407,18 @@ post '/admin/dashboard/data/news' do
     opdata.uploadedby = params['newsdata']['uploadedby']
     begin
       opdata.save
-      transmessage = 'Record updated.'
+      flash[:notify] = 'Record updated.'
     rescue
-      transmessage = 'Record update failed!'
+      flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
     begin
       params['newsdata']['id'] = News.count
       newsobj = News.new(params['newsdata'])
 	    newsobj.save
-	    transmessage = 'Record added.'
+	    flash[:notify] = 'Record added.'
     rescue
-      transmessage = 'Record add failed!'
+      flash[:notify] = 'Record add failed!'
     end
   end
   redirect '/admin/dashboard/data/news'
@@ -430,7 +427,7 @@ end
 # Route handler for admin dashboard contacts data view
 get '/admin/dashboard/data/contacts' do
   redirect '/admin/login' unless adminlogin?
-  @view_data = ViewData.new('metro_v3', 'Contacts')
+  @view_data = ViewData.new('metro_v3', 'Contacts', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
   # Data page information
@@ -455,18 +452,18 @@ post '/admin/dashboard/data/contacts' do
     opdata.email = params['condata']['email']
     begin
       opdata.save
-      transmessage = 'Record updated.'
+      flash[:notify] = 'Record updated.'
     rescue
-      transmessage = 'Record update failed!'
+      flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
     begin
       params['condata']['id'] = News.count
       newsobj = Contacts.new(params['condata'])
 	    newsobj.save
-	    transmessage = 'Record added.'
+	    flash[:notify] = 'Record added.'
     rescue
-      transmessage = 'Record add failed!'
+      flash[:notify] = 'Record add failed!'
     end
   end
   redirect '/admin/dashboard/data/contacts'

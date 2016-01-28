@@ -6,18 +6,22 @@ class ViewData
    @page_name = "Default"
    @css_urls = Array.new
    @data_hash = Hash.new
-   def initialize(page_style, page_name)
+   @notif = ""
+   def initialize(page_style, page_name, page_notify)
        @page_style = page_style
        @page_name = page_name
        @css_urls = Array.new
        @js_urls = Array.new
        @data_hash = Hash.new
+       @notif = page_notify
    end
    def get_travis_build_id()
       return Pagevars.set_vars("CIbuild")
    end
    def get_notifications()
-      return Notifications.get_all()
+      notifs = Notifications.get_all()
+      notifs.push(@notif)
+      return notifs
    end
    def get_css_urls()
       urls = @css_urls

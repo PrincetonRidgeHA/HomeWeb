@@ -37,6 +37,8 @@ GEM
       mail (>= 2.0)
     puma (2.16.0)
     rack (1.6.4)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -84,6 +86,7 @@ DEPENDENCIES
   pg
   pony
   puma
+  rack-flash3
   rack-protection
   rack-test
   rdoc
