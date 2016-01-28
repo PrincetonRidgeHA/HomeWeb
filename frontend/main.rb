@@ -229,14 +229,9 @@ get '/admin/oauth/v2/github/callback' do
   session[:adminkey] = access_token
   session[:admin_username] = auth_result['login']
   session[:admin_profilepic] = auth_result['avatar_url']
-  redirect '/admin/dashboard'
-end
-##
-# Redirects to admin dashboard home
-get '/admin/dashboard' do
-  redirect '/admin/login' unless adminlogin?
   redirect '/admin/dashboard/home'
 end
+##
 ##
 # Route handler for admin dashboard home
 get '/admin/dashboard/home' do
@@ -478,12 +473,10 @@ post '/admin/dashboard/data/contacts' do
 end
 ##
 # Route handler for CSV file output of allowed data structures
-get '/raw/protected/:item.csv' do
+get '/raw/protected/residents.csv' do
   redirect '/login' unless login?
   response.headers['content_type'] = "application/octet-stream"
-  attachment(params[:item] + '.csv')
-  if(params[:item] == 'residents')
+  attachment('residents.csv')
     item = Residents.all.order(:name)
-  end
   response.write(item.as_csv)
 end
