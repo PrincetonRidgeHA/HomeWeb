@@ -10,7 +10,7 @@ module Pagevars
   end
   def Pagevars.set_vars(vname)
     if vname == "CIbuild"
-      return Builddata.ci_get_build()
+      return BuildData.ci_get_build()
     elsif vname == "ADMINMAIL"
       return "wordman05@gmail.com"
     elsif vname == "ADMINNAME"

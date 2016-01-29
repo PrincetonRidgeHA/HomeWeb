@@ -89,7 +89,7 @@ end
 get '/login' do
   @view_data = ViewData.new('bootstrap_v3', 'Login', flash[:notice])
   @view_data.add_css_url('/src/css/login.css')
-  if(session[:authtries] == nil)
+  if(session[:authtries].nil?)
     session[:authtries] = 0
     slim :login
   elsif(session[:authtries] <= 3)
@@ -259,7 +259,7 @@ end
 # Route handler for POST to admin dashboard YOM data view
 post '/admin/dashboard/data/yom' do
   redirect '/admin/login' unless adminlogin?
-  #perform operation with data
+  # Perform operation with data
   if(params['operation'] == 'Update')
     opdata = Yardwinners.find(params['yardwinnerdata']['id'])
     opdata.name = params['yardwinnerdata']['name']
@@ -277,13 +277,13 @@ post '/admin/dashboard/data/yom' do
     begin
       params[:yardwinnerdata]['id'] = Yardwinners.count
       yomwinner = Yardwinners.new(params[:yardwinnerdata])
-	    yomwinner.save
-	    flash[:notify] = 'Record added.'
+      yomwinner.save
+      flash[:notify] = 'Record added.'
     rescue
       flash[:notify] = 'Record add failed!'
     end
   end
-  redirect ' admin/dashboard/data/yom'
+  redirect 'admin/dashboard/data/yom'
 end
 ##
 # Route handler for admin dashboard resident directory data view
@@ -415,8 +415,8 @@ post '/admin/dashboard/data/news' do
     begin
       params['newsdata']['id'] = News.count
       newsobj = News.new(params['newsdata'])
-	    newsobj.save
-	    flash[:notify] = 'Record added.'
+      newsobj.save
+      flash[:notify] = 'Record added.'
     rescue
       flash[:notify] = 'Record add failed!'
     end
@@ -474,6 +474,6 @@ get '/raw/protected/residents.csv' do
   redirect '/login' unless login?
   response.headers['content_type'] = "application/octet-stream"
   attachment('residents.csv')
-    item = Residents.all.order(:name)
+  item = Residents.all.order(:name)
   response.write(item.as_csv)
 end
