@@ -7,6 +7,7 @@ class ViewData
    @css_urls = Array.new
    @data_hash = Hash.new
    @notif = ""
+   @js_urls = Array.new
    def initialize(page_style, page_name, page_notify)
        @page_style = page_style
        @page_name = page_name
@@ -44,18 +45,18 @@ class ViewData
       @js_urls.push(url)
    end
    def get_js_urls()
-      js_urls = @js_urls
-      js_urls.push('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-      js_urls.push('http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js')
-      js_urls.push('http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js')
+      js_urls_temp = @js_urls
+      js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+      js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js')
+      js_urls_temp.push('http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js')
       if(@page_style == 'bootstrap_v3')
-         js_urls.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
-         js_urls.push('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
+         js_urls_temp.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+         js_urls_temp.push('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
       elsif(@page_style == 'metro_v3')
-         js_urls.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/js/metro.min.js')
-         js_urls.push('/src/js/metro/notif.js')
+         js_urls_temp.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/js/metro.min.js')
+         js_urls_temp.push('/src/js/metro/notif.js')
       end
-      return js_urls.reverse
+      return js_urls_temp.reverse
    end
    def get_page_name()
       return @page_name

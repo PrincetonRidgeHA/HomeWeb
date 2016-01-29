@@ -4,6 +4,6 @@ class Notification
         @msg = message
     end
     def to_s()
-        return '#{@@title}|#{@@msg}'
+        return @title + '|' + @msg
     end
 end

@@ -161,6 +161,7 @@ get '/secured/members/residents' do
   @view_data = ViewData.new('bootstrap_v3', 'Resident Directory', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @view_data.add_js_url('/src/js/member/disclaimer.js')
+  @view_data.add_js_url('//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js')
   @pagination = Pagination.new(Residents.count, params['pg'])
   @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(@pagination.get_start_index))
   slim :member_directory
