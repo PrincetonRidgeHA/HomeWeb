@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Pagevars - RDoc Documentation</title>
+<title>class Notification - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -18,7 +18,7 @@
 
 
 
-<body id="top" role="document" class="module">
+<body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
@@ -54,7 +54,14 @@
 
   <div id="class-metadata">
     
-    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</div>
+
     
     
     <!-- Method Quickref -->
@@ -63,7 +70,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-set_vars">::set_vars</a>
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-to_s">#to_s</a>
     
   </ul>
 </div>
@@ -71,9 +80,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Pagevars">
-  <h1 id="module-Pagevars" class="module">
-    module Pagevars
+<main role="main" aria-labelledby="class-Notification">
+  <h1 id="class-Notification" class="class">
+    class Notification
   </h1>
 
   <section class="description">
@@ -99,11 +108,11 @@
        </header>
 
     
-      <div id="method-c-set_vars" class="method-detail ">
+      <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">set_vars</span><span
-            class="method-args">(vname)</span>
+          <span class="method-name">new</span><span
+            class="method-args">(name, message)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -112,23 +121,58 @@
 
         <div class="method-description">
           
-          <p>Gets a variable from the dynamic Builddata module.</p>
+          
           
           
 
           
-          <div class="method-source-code" id="set_vars-source">
-            <pre><span class="ruby-comment"># File frontend/inc/pagevars.rb, line 15</span>
-<span class="ruby-keyword">def</span> <span class="ruby-constant">Pagevars</span>.<span class="ruby-identifier">set_vars</span>(<span class="ruby-identifier">vname</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">vname</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;CIbuild&quot;</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-constant">BuildData</span>.<span class="ruby-identifier">ci_get_build</span>()
-  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">vname</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;ADMINMAIL&quot;</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;wordman05@gmail.com&quot;</span>
-  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">vname</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;ADMINNAME&quot;</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;Joshua Zenn&quot;</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;Error&quot;</span>
-  <span class="ruby-keyword">end</span>
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File frontend/inc/notification.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">message</span>)
+    <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">name</span>
+    <span class="ruby-ivar">@msg</span> = <span class="ruby-identifier">message</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-to_s" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Refactors current <a href="Notification.html">Notification</a> object into
+a string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File frontend/inc/notification.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>()
+    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@title</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;|&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@msg</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

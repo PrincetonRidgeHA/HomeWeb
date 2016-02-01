@@ -8,6 +8,8 @@ class ViewData
    @data_hash = Hash.new
    @notif = ""
    @js_urls = Array.new
+   ##
+   # Default initializer for ViewData object.
    def initialize(page_style, page_name, page_notify)
        @page_style = page_style
        @page_name = page_name
@@ -16,14 +18,20 @@ class ViewData
        @data_hash = Hash.new
        @notif = page_notify
    end
+   ##
+   # Gets the corresponding UID for current build.
    def get_travis_build_id()
       return Pagevars.set_vars("CIbuild")
    end
+   ##
+   # Gets all global notifications.
    def get_notifications()
       notifs = Notifications.get_all()
       notifs.push(@notif)
       return notifs
    end
+   ##
+   # Retrieves list of CSS files needed by curent site style.
    def get_css_urls()
       urls = @css_urls
       if(@page_style == 'bootstrap_v3')
@@ -38,12 +46,19 @@ class ViewData
       end
       return urls.reverse
    end
+   ##
+   # Adds a CSS file link to the referenced ViewData object.
    def add_css_url(url)
       @css_urls.push(url)
    end
+   ##
+   # Adds a JavaScript file link to the referenced ViewData object.
    def add_js_url(url)
       @js_urls.push(url)
    end
+   ##
+   # Retrieves list of JavaScript files required by
+   # current site style and functionality.
    def get_js_urls()
       js_urls_temp = @js_urls
       js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
@@ -58,15 +73,25 @@ class ViewData
       end
       return js_urls_temp.reverse
    end
+   ##
+   # Gets the current page name.
    def get_page_name()
       return @page_name
    end
+   ##
+   # Adds a variable to the referenced ViewData object
+   # hash table.
    def set_var(name, value)
       @data_hash[name] = value
    end
+   ##
+   # Get a variable from the referenced ViewData object
+   # hash table.
    def get_var(name)
       return @data_hash[name]
    end
+   ##
+   # Gets the currently selected style of the ViewData object.
    def get_style_name()
       if(@page_style == 'bootstrap_v3')
          return 'bootstrap'

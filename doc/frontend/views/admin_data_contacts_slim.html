@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>bugreport.slim - RDoc Documentation</title>
+<title>admin_data_contacts.slim - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -154,36 +154,88 @@
   </div>
 </nav>
 
-<main role="main" aria-label="Page frontend/views/bugreport.slim">
+<main role="main" aria-label="Page frontend/views/admin_data_contacts.slim">
 
-<p>&lt;div class=“container”&gt;</p>
+<h2 id="label-slim+-3A_partial_admin_navigation">slim :_partial_admin_navigation<span><a href="#label-slim+-3A_partial_admin_navigation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<pre>&lt;div class=&quot;header clearfix&quot;&gt;
-  &lt;nav&gt;
-    &lt;ul class=&quot;nav nav-pills pull-right&quot;&gt;
-      &lt;li role=&quot;presentation&quot; class=&quot;active&quot;&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li role=&quot;presentation&quot;&gt;&lt;a href=&quot;/secured/home&quot;&gt;Secure&lt;/a&gt;&lt;/li&gt;
-      &lt;li role=&quot;presentation&quot;&gt;&lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/nav&gt;
-  &lt;h3 class=&quot;text-muted&quot;&gt;PRHA&lt;/h3&gt;
-&lt;/div&gt;
-&lt;h1&gt;Report a Bug&lt;/h1&gt;
-&lt;h4&gt;Found a bug in the website? Fill out the following form and hit submit. If you are redirected to the home page, your request has been sent.&lt;/h4&gt;
-&lt;form&gt;
-  &lt;p&gt;Email&lt;span color=&quot;red&quot;&gt;*&lt;/span&gt;: &lt;input type=&quot;text&quot; name=&quot;email&quot; value=&quot;user@email.com&quot;/&gt;&lt;/p&gt;
-  &lt;p&gt;Name&lt;span color=&quot;red&quot;&gt;*&lt;/span&gt;: &lt;input type=&quot;text&quot; name=&quot;fname&quot; value=&quot;John Smith&quot;/&gt;&lt;/p&gt;
-  &lt;p&gt;Are you a resident at Princeton Ridge? &lt;input type=&quot;checkbox&quot; name=&quot;resident&quot; value=&quot;true&quot;&gt;&lt;/p&gt;
-  &lt;p&gt;Please describe your problem in detail. The more information you provide, the quicker we will be able to fix the problem.&lt;/p&gt;
-  &lt;textarea name=&quot;message&quot; rows=&quot;10&quot; cols=&quot;30&quot;&gt;
-    Describe the problem in detail.
-  &lt;/textarea&gt;
-  &lt;!-- Insert submit button --&gt;
-&lt;/form&gt;
-&lt;footer class=&quot;footer&quot;&gt;
-  &lt;p&gt;Copyright &amp;copy; 2015 - Princeton Ridge Homeowners Association &amp;middot; Developed by &lt;a href=&quot;http://github.com/ARMmaster17&quot;&gt;Joshua Zenn&lt;/a&gt;&lt;/p&gt;
-  &lt;p&gt;Version: #{@view_data.get_travis_build_id}&lt;/p&gt;
-&lt;/footer&gt;</pre>
+<p>&lt;div class=“page-content”&gt;</p>
+
+<pre>&lt;div class=&quot;flex-grid no-responsive-future&quot; style=&quot;height: 100%;&quot;&gt;
+    &lt;div class=&quot;row&quot; style=&quot;height: 100%&quot;&gt;
+        == slim :_partial_admin_sidebar
+        &lt;div class=&quot;cell auto-size padding20 bg-white&quot; id=&quot;cell-content&quot;&gt;
+            &lt;h1 class=&quot;text-light&quot;&gt;Contacts (#{@contactscount})&lt;/h1&gt;
+            &lt;hr class=&quot;thin bg-grayLighter&quot;&gt;
+            &lt;table class=&quot;table striped hovered cell-hovered border bordered&quot;&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                      &lt;th&gt;ID&lt;/th&gt;
+                      &lt;th&gt;Title&lt;/th&gt;
+                      &lt;th&gt;Name&lt;/th&gt;
+                      &lt;th&gt;Email&lt;/th&gt;
+                      &lt;th&gt;Actions&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    - @items.each do |item|
+                      &lt;form action=&quot;/admin/dashboard/data/contacts&quot; method=&quot;POST&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[id]&quot; readonly value=&quot;#{item.id}&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[title]&quot; value=&quot;#{item.title}&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[name]&quot; value=&quot;#{item.name}&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[email]&quot; value=&quot;#{item.email}&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;input class=&quot;button primary&quot; type=&quot;submit&quot; name=&quot;operation&quot; value=&quot;Update&quot; /&gt;
+                                  &lt;input class=&quot;button danger&quot; type=&quot;submit&quot; name=&quot;operation&quot; value=&quot;Delete&quot; /&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/form&gt;
+                    &lt;form action=&quot;/admin/dashboard/data/contacts&quot; method=&quot;POST&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td&gt;
+
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[title]&quot; placeholder=&quot;ACC President&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[name]&quot; placeholder=&quot;John Smith&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;div class=&quot;input-control text&quot;&gt;
+                                    &lt;input type=&quot;text&quot; name=&quot;condata[email]&quot; placeholder=&quot;user@example.com&quot;&gt;
+                                  &lt;/div&gt;
+                              &lt;/td&gt;
+                              &lt;td&gt;
+                                  &lt;input class=&quot;button success&quot; type=&quot;submit&quot; name=&quot;operation&quot; value=&quot;Create&quot; /&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                    &lt;/form&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
 
 <p>&lt;/div&gt;</p>
 </main>

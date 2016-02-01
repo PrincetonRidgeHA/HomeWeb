@@ -1,4 +1,6 @@
 module Pagevars
+  ##
+  # Load wrapped Builddata module.
   begin
     if ENV['env'] == 'production'
       require_relative './builddata'
@@ -8,6 +10,8 @@ module Pagevars
   rescue
     raise "Missing builddata file"
   end
+  ##
+  # Gets a variable from the dynamic Builddata module.
   def Pagevars.set_vars(vname)
     if vname == "CIbuild"
       return BuildData.ci_get_build()

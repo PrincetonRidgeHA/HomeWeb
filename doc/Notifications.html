@@ -112,16 +112,19 @@
 
         <div class="method-description">
           
-          
+          <p>Gets all global notifications for current site state.</p>
           
           
 
           
           <div class="method-source-code" id="get_all-source">
-            <pre><span class="ruby-comment"># File frontend/inc/notifications.rb, line 2</span>
+            <pre><span class="ruby-comment"># File frontend/inc/notifications.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Notifications</span>.<span class="ruby-identifier">get_all</span>()
   <span class="ruby-identifier">rVal</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-identifier">rVal</span>.<span class="ruby-identifier">push</span>(<span class="ruby-string">&quot;Heads up! This site is a work in progess. Some things might not work the way they should.&quot;</span>)
+  <span class="ruby-keyword">if</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;HEROKU_PIPELINE&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;staging&#39;</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;RACK_ENV&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;test&#39;</span>)
+    <span class="ruby-identifier">dev_msg</span> = <span class="ruby-constant">Notification</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;Unstable Codebase&#39;</span>, <span class="ruby-string">&#39;You are using the development version of this site.&#39;</span>)
+    <span class="ruby-identifier">rVal</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">dev_msg</span>)
+  <span class="ruby-keyword">end</span>
   <span class="ruby-comment"># Insert other global notifications here</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">rVal</span>
 <span class="ruby-keyword">end</span></pre>

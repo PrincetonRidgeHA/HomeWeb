@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>bugreport.slim - RDoc Documentation</title>
+<title>member_contacts.slim - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -154,36 +154,42 @@
   </div>
 </nav>
 
-<main role="main" aria-label="Page frontend/views/bugreport.slim">
+<main role="main" aria-label="Page frontend/views/member_contacts.slim">
 
-<p>&lt;div class=“container”&gt;</p>
+<h2 id="label-slim+-3A_partial_dashboard_navigation">slim :_partial_dashboard_navigation<span><a href="#label-slim+-3A_partial_dashboard_navigation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<pre>&lt;div class=&quot;header clearfix&quot;&gt;
-  &lt;nav&gt;
-    &lt;ul class=&quot;nav nav-pills pull-right&quot;&gt;
-      &lt;li role=&quot;presentation&quot; class=&quot;active&quot;&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
-      &lt;li role=&quot;presentation&quot;&gt;&lt;a href=&quot;/secured/home&quot;&gt;Secure&lt;/a&gt;&lt;/li&gt;
-      &lt;li role=&quot;presentation&quot;&gt;&lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/nav&gt;
-  &lt;h3 class=&quot;text-muted&quot;&gt;PRHA&lt;/h3&gt;
-&lt;/div&gt;
-&lt;h1&gt;Report a Bug&lt;/h1&gt;
-&lt;h4&gt;Found a bug in the website? Fill out the following form and hit submit. If you are redirected to the home page, your request has been sent.&lt;/h4&gt;
-&lt;form&gt;
-  &lt;p&gt;Email&lt;span color=&quot;red&quot;&gt;*&lt;/span&gt;: &lt;input type=&quot;text&quot; name=&quot;email&quot; value=&quot;user@email.com&quot;/&gt;&lt;/p&gt;
-  &lt;p&gt;Name&lt;span color=&quot;red&quot;&gt;*&lt;/span&gt;: &lt;input type=&quot;text&quot; name=&quot;fname&quot; value=&quot;John Smith&quot;/&gt;&lt;/p&gt;
-  &lt;p&gt;Are you a resident at Princeton Ridge? &lt;input type=&quot;checkbox&quot; name=&quot;resident&quot; value=&quot;true&quot;&gt;&lt;/p&gt;
-  &lt;p&gt;Please describe your problem in detail. The more information you provide, the quicker we will be able to fix the problem.&lt;/p&gt;
-  &lt;textarea name=&quot;message&quot; rows=&quot;10&quot; cols=&quot;30&quot;&gt;
-    Describe the problem in detail.
-  &lt;/textarea&gt;
-  &lt;!-- Insert submit button --&gt;
-&lt;/form&gt;
-&lt;footer class=&quot;footer&quot;&gt;
-  &lt;p&gt;Copyright &amp;copy; 2015 - Princeton Ridge Homeowners Association &amp;middot; Developed by &lt;a href=&quot;http://github.com/ARMmaster17&quot;&gt;Joshua Zenn&lt;/a&gt;&lt;/p&gt;
-  &lt;p&gt;Version: #{@view_data.get_travis_build_id}&lt;/p&gt;
-&lt;/footer&gt;</pre>
+<p>&lt;div class=“container-fluid”&gt;</p>
+
+<pre>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-sm-12&quot;&gt;
+    &lt;h1 class=&quot;page-header&quot;&gt;Contacts&lt;/h1&gt;
+    &lt;div class=&quot;table-responsive&quot;&gt;
+      &lt;table class=&quot;table table-striped&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Title&lt;/th&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Email&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          - @items.each do |item|
+            &lt;tr&gt;
+              &lt;td&gt;
+                =item.title
+              &lt;/td&gt;
+              &lt;td&gt;
+                =item.name
+              &lt;/td&gt;
+              &lt;td&gt;
+                &lt;a href=&quot;mailto:#{item.email}&quot;&gt;#{item.email}&lt;/a&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
 
 <p>&lt;/div&gt;</p>
 </main>

@@ -1,4 +1,7 @@
 module Dateservice
+    ##
+    # Converts a numeric value into a string
+    # representing months in a year.
     def Dateservice.get_month(mi)
         if(mi == 1)
             return 'January'

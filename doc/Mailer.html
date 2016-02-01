@@ -112,13 +112,13 @@
 
         <div class="method-description">
           
-          
+          <p>Wrapper to Pony gem for sending mail using external SMTP services.</p>
           
           
 
           
           <div class="method-source-code" id="send-source">
-            <pre><span class="ruby-comment"># File frontend/inc/mailer.rb, line 5</span>
+            <pre><span class="ruby-comment"># File frontend/inc/mailer.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">to</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">body</span>)
   <span class="ruby-constant">Pony</span>.<span class="ruby-identifier">mail</span>({
     <span class="ruby-value">:from</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Pagevars</span>.<span class="ruby-identifier">setVars</span>(<span class="ruby-string">&quot;ADMINMAIL&quot;</span>),
