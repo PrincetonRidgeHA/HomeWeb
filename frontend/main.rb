@@ -283,6 +283,14 @@ post '/admin/dashboard/data/yom' do
     rescue
       flash[:notify] = 'Record add failed!'
     end
+  elsif(params['operation'] == 'Delete')
+    begin
+      opdata = Yardwinners.find(params['yardwinnerdata']['id'])
+      opdata.delete
+      flash[:notify] = 'Record deleted.'
+    rescue
+      flash[:notify] = 'Record delete failed!'
+    end
   end
   redirect 'admin/dashboard/data/yom'
 end
@@ -328,6 +336,14 @@ post '/admin/dashboard/data/rd' do
       flash[:notify] = 'Record added.'
     rescue
       flash[:notify] = 'Record add failed!'
+    end
+  elsif(params['operation'] == 'Delete')
+    begin
+      opdata = Residents.find(params['rdd']['id'])
+      opdata.delete
+      flash[:notify] = 'Record deleted.'
+    rescue
+      flash[:notify] = 'Record delete failed!'
     end
   end
   redirect '/admin/dashboard/data/rd'
@@ -375,6 +391,14 @@ post '/admin/dashboard/data/docs' do
     rescue
       flash[:notify] = 'Record add failed!'
     end
+  elsif(params['operation'] == 'Delete')
+    begin
+      opdata = Docs.find(params['doc']['id'])
+      opdata.delete
+      flash[:notify] = 'Record deleted.'
+    rescue
+      flash[:notify] = 'Record delete failed!'
+    end
   end
   redirect '/admin/dashboard/data/docs'
 end
@@ -421,6 +445,14 @@ post '/admin/dashboard/data/news' do
     rescue
       flash[:notify] = 'Record add failed!'
     end
+  elsif(params['operation'] == 'Delete')
+    begin
+      opdata = News.find(params['newsdata']['id'])
+      opdata.delete
+      flash[:notify] = 'Record deleted.'
+    rescue
+      flash[:notify] = 'Record delete failed!'
+    end
   end
   redirect '/admin/dashboard/data/news'
 end
@@ -465,6 +497,14 @@ post '/admin/dashboard/data/contacts' do
 	    flash[:notify] = 'Record added.'
     rescue
       flash[:notify] = 'Record add failed!'
+    end
+  elsif(params['operation'] == 'Delete')
+    begin
+      opdata = Contacts.find(params['condata']['id'])
+      opdata.delete
+      flash[:notify] = 'Record deleted.'
+    rescue
+      flash[:notify] = 'Record delete failed!'
     end
   end
   redirect '/admin/dashboard/data/contacts'
