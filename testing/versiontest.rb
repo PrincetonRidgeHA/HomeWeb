@@ -92,7 +92,7 @@ class TestVersion < Test::Unit::TestCase
   # Test underlying database structure
   def test_padm_data_yom_manip
     # Set up sample data
-    test_data = Hash.news
+    test_data = Hash.new
     test_data['name'] = 'Sample Name'
     test_data['address'] = '123 Sample street'
     test_data['month'] = 1
@@ -113,7 +113,7 @@ class TestVersion < Test::Unit::TestCase
   end
   def test_padm_data_rd_manip
     # Set up sample data
-    test_data = Hash.news
+    test_data = Hash.new
     test_data['name'] = 'Sample Name'
     test_data['addr'] = '123 Sample street'
     test_data['email'] = 'user@example.com'
@@ -133,7 +133,7 @@ class TestVersion < Test::Unit::TestCase
   end
   def test_padm_data_docs_manip
     # Set up sample data
-    test_data = Hash.news
+    test_data = Hash.new
     test_data['name'] = 'Sample Document'
     test_data['uploaddate'] = '20160101'
     test_data['uploadedby'] = 'Travis CI'
@@ -153,7 +153,7 @@ class TestVersion < Test::Unit::TestCase
   end
   def test_padm_data_news_manip
     # Set up sample data
-    test_data = Hash.news
+    test_data = Hash.new
     test_data['title'] = 'News Title'
     test_data['content'] = 'Content goes here'
     test_data['uploaddate'] = '20160101'
@@ -173,7 +173,7 @@ class TestVersion < Test::Unit::TestCase
   end
   def test_padm_data_contacts_manip
     # Set up sample data
-    test_data = Hash.news
+    test_data = Hash.new
     test_data['title'] = 'Supreme Leader'
     test_data['name'] = 'Travis CI'
     test_data['email'] = 'user@example.com'
