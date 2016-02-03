@@ -491,7 +491,7 @@ post '/admin/dashboard/data/contacts' do
     end
   elsif(params['operation'] == 'Create')
     begin
-      params['condata']['id'] = News.count
+      params['condata']['id'] = Contacts.count
       newsobj = Contacts.new(params['condata'])
 	    newsobj.save
 	    flash[:notify] = 'Record added.'
