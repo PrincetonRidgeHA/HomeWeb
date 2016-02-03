@@ -1,9 +1,3 @@
-development:
-  adapter: postgresql
-  database: ddbvvogf4fjltn
-  username: zozzuejiukpbns
-  password: nbyuQqfpXvlFb178HXvqaDTuPP
-  host: ec2-54-163-228-188.compute-1.amazonaws.com
 test:
   adapter: postgresql
   database: travis_ci_test

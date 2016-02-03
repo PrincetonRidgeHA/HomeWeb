@@ -18,10 +18,9 @@ end
 configure :development, :test do
 	ActiveRecord::Base.establish_connection(
 			:adapter  => 'postgresql',
-			:host     => 'ec2-54-163-228-188.compute-1.amazonaws.com',
-			:username => 'zozzuejiukpbns',
-			:password => 'nbyuQqfpXvlFb178HXvqaDTuPP',
-			:database => 'ddbvvogf4fjltn',
+			:host     => 'localhost',
+			:username => 'postgres',
+			:database => 'travis_ci_test',
 			:encoding => 'utf8'
 	)
 end
