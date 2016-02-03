@@ -21,12 +21,36 @@ class TestVersion < Test::Unit::TestCase
     assert last_response.ok?
   end
   def test_news
+    # Set up sample data
+    test_data = Hash.new
+    test_data['title'] = 'News Title'
+    test_data['content'] = 'Content goes here'
+    test_data['uploaddate'] = '20160101'
+    test_data['uploadedby'] = 'Travis CI Test Service'
+    # Test create method
+    post "/admin/dashboard/data/news", {:newsdata => test_data, :operation => 'Create'}
     get '/news'
     assert last_response.ok?
+    # Test delete method
+    test_data['id'] = 0
+    post "/admin/dashboard/data/news", {:newsdata => test_data, :operation => 'Delete'}
+    assert last_response.redirect?
   end
   def test_news_item
+    # Set up sample data
+    test_data = Hash.new
+    test_data['title'] = 'News Title'
+    test_data['content'] = 'Content goes here'
+    test_data['uploaddate'] = '20160101'
+    test_data['uploadedby'] = 'Travis CI Test Service'
+    # Test create method
+    post "/admin/dashboard/data/news", {:newsdata => test_data, :operation => 'Create'}
     get '/news/0'
     assert last_response.ok?
+    # Test delete method
+    test_data['id'] = 0
+    post "/admin/dashboard/data/news", {:newsdata => test_data, :operation => 'Delete'}
+    assert last_response.redirect?
   end
   # Test login system
   def test_login_reset
