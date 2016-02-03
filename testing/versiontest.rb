@@ -13,8 +13,21 @@ class TestVersion < Test::Unit::TestCase
   end
   # Test static pages
   def test_homepage
+    # Set up sample data
+    test_data = Hash.new
+    test_data['name'] = 'Sample Name'
+    test_data['address'] = '123 Sample street'
+    test_data['month'] = 1
+    test_data['year'] = 2000
+    test_data['imgpath'] = '#'
+    # Test create method
+    post "/admin/dashboard/data/yom", {:yardwinnerdata => test_data, :operation => 'Create'}
+    assert last_response.redirect?
     get '/'
     assert last_response.ok?
+    # Test delete method
+    post "/admin/dashboard/data/yom", {:yardwinnerdata => test_data, :operation => 'Delete'}
+    assert last_response.redirect?
   end
   def test_contactpage
     get '/contact'
