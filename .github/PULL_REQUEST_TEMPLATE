@@ -1,0 +1,12 @@
+Closes issue #.
+
+# Description
+Enter a meaningful description on why this PR should be accepted.
+
+# Merge checklist
+- [x] Contains code changes
+- [ ] Tested locally
+- [ ] Tested on Travis CI
+
+# Info
+To report bugs, contact @ARMmaster17.
