@@ -34,10 +34,10 @@ class ViewData
    # Retrieves list of CSS files needed by curent site style.
    def get_css_urls()
       urls = @css_urls
-      if(@page_style == 'bootstrap_v3')
+      if(@page_style.eql? 'bootstrap_v3')
          urls.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
          urls.push('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css')
-      elsif(@page_style == 'metro_v3')
+      elsif(@page_style.eql? 'metro_v3')
          urls.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro.min.css')
          urls.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-responsive.min.css')
          urls.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-schemes.min.css')
@@ -64,10 +64,10 @@ class ViewData
       js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
       js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js')
       js_urls_temp.push('http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js')
-      if(@page_style == 'bootstrap_v3')
+      if(@page_style.eql? 'bootstrap_v3')
          js_urls_temp.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
          js_urls_temp.push('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
-      elsif(@page_style == 'metro_v3')
+      elsif(@page_style.eql? 'metro_v3')
          js_urls_temp.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/js/metro.min.js')
          js_urls_temp.push('/src/js/metro/notif.js')
       end
