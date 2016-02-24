@@ -65,7 +65,7 @@ class ViewData
       js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js')
       # js_urls_temp.push('http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js')
       if(@page_style.eql? 'bootstrap_v3')
-         js_urls_temp.push('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+         js_urls_temp.push('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
          js_urls_temp.push('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
       elsif(@page_style.eql? 'metro_v3')
          js_urls_temp.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/js/metro.min.js')
