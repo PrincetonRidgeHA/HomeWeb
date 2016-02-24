@@ -276,7 +276,7 @@ post '/admin/dashboard/data/yom' do
     end
   elsif(params['operation'] == 'Create')
     begin
-      # params[:yardwinnerdata]['id'] = Yardwinners.count
+      params[:yardwinnerdata]['id'] = Yardwinners.count
       yomwinner = Yardwinners.new(params[:yardwinnerdata])
       yomwinner.save
       flash[:notify] = 'Record added.'
@@ -329,7 +329,7 @@ post '/admin/dashboard/data/rd' do
       flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
-    # params['rdd']['id'] = Residents.count
+    params['rdd']['id'] = Residents.count
     begin
       red = Residents.new(params['rdd'])
       red.save
@@ -383,7 +383,7 @@ post '/admin/dashboard/data/docs' do
       flash[:notify] = 'Record update failed!'
     end
   elsif(params['operation'] == 'Create')
-    # params['doc']['id'] = Docs.count
+    params['doc']['id'] = Docs.count
     begin
       docdata = Docs.new(params['doc'])
       docdata.save
@@ -438,7 +438,7 @@ post '/admin/dashboard/data/news' do
     end
   elsif(params['operation'] == 'Create')
     begin
-      # params['newsdata']['id'] = News.count
+      params['newsdata']['id'] = News.count
       newsobj = News.new(params['newsdata'])
       newsobj.save
       flash[:notify] = 'Record added.'
@@ -491,7 +491,7 @@ post '/admin/dashboard/data/contacts' do
     end
   elsif(params['operation'] == 'Create')
     begin
-      # params['condata']['id'] = Contacts.count
+      params['condata']['id'] = Contacts.count
       newsobj = Contacts.new(params['condata'])
 	    newsobj.save
 	    flash[:notify] = 'Record added.'
