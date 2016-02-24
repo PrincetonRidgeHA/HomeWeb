@@ -61,8 +61,6 @@ class ViewData
    # current site style and functionality.
    def get_js_urls()
       js_urls_temp = @js_urls
-      js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-      js_urls_temp.push('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js')
       # js_urls_temp.push('http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js')
       if(@page_style.eql? 'bootstrap_v3')
          js_urls_temp.push('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
