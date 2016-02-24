@@ -44,7 +44,7 @@ class ViewData
          urls.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-rtl.min.css')
          urls.push('https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-icons.min.css')
       end
-      return urls.reverse
+      return urls
    end
    ##
    # Adds a CSS file link to the referenced ViewData object.
