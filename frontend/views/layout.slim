@@ -24,11 +24,12 @@
     == yield
     - if @view_data.get_style_name == 'bootstrap'
       - @view_data.get_notifications.each do |t|
-        javascript:
-          toastr.options = {
-          "closeButton": true
-          }
-          toastr.info('#{t.to_s}');
+        - if t != ''
+          javascript:
+            toastr.options = {
+            "closeButton": true
+            }
+            toastr.info('#{t.to_s}');
     - if @view_data.get_style_name == 'metro'
       - @view_data.get_notifications.each do |t|
         javascript:
