@@ -35,7 +35,7 @@ GEM
     pg (0.18.4)
     pony (1.11)
       mail (>= 2.0)
-    puma (2.16.0)
+    puma (3.0.1)
     rack (1.6.4)
     rack-flash3 (1.0.5)
       rack
