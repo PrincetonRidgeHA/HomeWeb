@@ -6,7 +6,6 @@ class ViewData
    @page_name = "Default"
    @css_urls = Array.new
    @data_hash = Hash.new
-   @notif = ""
    @js_urls = Array.new
    ##
    # Default initializer for ViewData object.
@@ -16,7 +15,7 @@ class ViewData
        @css_urls = Array.new
        @js_urls = Array.new
        @data_hash = Hash.new
-       @notif = page_notify
+       # @notif = page_notify
    end
    ##
    # Gets the corresponding UID for current build.
@@ -27,7 +26,7 @@ class ViewData
    # Gets all global notifications.
    def get_notifications()
       notifs = Notifications.get_all()
-      notifs.push(@notif)
+      # notifs.push(@notif)
       return notifs
    end
    ##
