@@ -15,12 +15,22 @@ configure :production do
 			:encoding => 'utf8'
 	)
 end
-configure :development, :test do
+configure :test do
 	ActiveRecord::Base.establish_connection(
 			:adapter  => 'postgresql',
 			:host     => 'localhost',
 			:username => 'postgres',
 			:database => 'travis_ci_test',
+			:encoding => 'utf8'
+	)
+end
+configure :development do
+	ActiveRecord::Base.establish_connection(
+			:adapter  => 'postgresql',
+			:host     => 'localhost',
+			:username => 'postgres',
+			:password => 'test',
+			:database => 'prha1',
 			:encoding => 'utf8'
 	)
 end

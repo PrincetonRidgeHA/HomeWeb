@@ -44,7 +44,7 @@ helpers do
   ##
   # Defines if current user is logged in through OAuth GitHub gateway
   def adminlogin?
-    if ENV['CI']
+    if ENV['CI'] || ENV['RACK_ENV'] == 'development'
       return true
     elsif session[:adminauth].nil?
       return false
@@ -63,7 +63,13 @@ get '/' do
   current_winner = Yardwinners.all.order(month: :desc).limit(1).first
   @view_data.set_var('yom_winner', current_winner)
   # Use generic image if none exists
-  if(@view_data.get_var('yom_winner').imgpath == '#')
+  if(@view_data.get_var('yom_winner').nil?)
+    placeholder_data = Hash.new
+    placeholder_data['yom_month'] = "January"
+    placeholder_data['yom_name'] = "Null"
+    @view_data.set_var('yom_winner', Hash.new)
+    
+  elsif(@view_data.get_var('yom_winner').imgpath == '#')
     img_temp = @view_data.get_var('yom_winner')
     img_temp.imgpath = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
     @view_data.set_var('yom_winner', img_temp)
@@ -102,7 +108,7 @@ end
 ##
 # Authenticicates user and sets up session keys
 post '/login' do
-  if(params[:inputPassword] == ENV['ADMIN_PWD'])
+  if(params[:inputPassword] == ENV['ADMIN_PWD'] || ENV['RACK_ENV'] == 'development')
     session[:authusr] = true
     redirect '/secured/members/home'
   else
@@ -198,6 +204,9 @@ end
 ##
 # Route handler for admin login
 get '/admin/login' do
+  if(ENV['RACK_ENV'] == 'development')
+    redirect "/admin/dashboard/home"
+  end
   @view_data = ViewData.new('metro_v3', 'Administrator Login', flash[:notice])
   @view_data.add_css_url('/src/css/admin/login.css')
   @gitid = ENV['GITHUB_CLIENT_ID']

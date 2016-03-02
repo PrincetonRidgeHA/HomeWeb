@@ -1,0 +1,57 @@
+# Logfile created on 2016-03-02 14:37:44 +0000 by logger.rb/47272
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Starting the New Relic agent in "development" environment.
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "development" section of your newrelic.yml.
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Reading configuration from config/newrelic.yml (/home/ubuntu/workspace)
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Environment: development
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : No known dispatcher detected.
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Application: PRHA (Development)
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Installing ActiveRecord 4 instrumentation
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Installing Sinatra instrumentation
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Installing Net instrumentation
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Installing deferred Rack::Builder instrumentation
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Installing Rack::Builder middleware instrumentation
+[2016-03-02 14:37:44 +0000 armmaster17-prha-web-1942810 (747)] INFO : Finished instrumentation
+[2016-03-02 14:37:45 +0000 armmaster17-prha-web-1942810 (747)] INFO : Reporting to: https://rpm.newrelic.com/accounts/1216413/applications/11359766
+[2016-03-02 14:37:52 +0000 armmaster17-prha-web-1942810 (747)] INFO : Doing deferred dependency-detection before Rack startup
+[2016-03-02 14:43:25 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Starting the New Relic agent in "development" environment.
+[2016-03-02 14:43:25 +0000 armmaster17-prha-web-1942810 (1038)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "development" section of your newrelic.yml.
+[2016-03-02 14:43:25 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Reading configuration from config/newrelic.yml (/home/ubuntu/workspace)
+[2016-03-02 14:43:25 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Environment: development
+[2016-03-02 14:43:25 +0000 armmaster17-prha-web-1942810 (1038)] INFO : No known dispatcher detected.
+[2016-03-02 14:43:25 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Application: PRHA (Development)
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Installing ActiveRecord 4 instrumentation
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Installing Sinatra instrumentation
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Installing Net instrumentation
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Installing deferred Rack::Builder instrumentation
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Installing Rack::Builder middleware instrumentation
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Finished instrumentation
+[2016-03-02 14:43:26 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Reporting to: https://rpm.newrelic.com/accounts/1216413/applications/11359766
+[2016-03-02 14:43:30 +0000 armmaster17-prha-web-1942810 (1038)] INFO : Doing deferred dependency-detection before Rack startup
+[2016-03-02 14:46:24 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Starting the New Relic agent in "development" environment.
+[2016-03-02 14:46:24 +0000 armmaster17-prha-web-1942810 (1107)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "development" section of your newrelic.yml.
+[2016-03-02 14:46:24 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Reading configuration from config/newrelic.yml (/home/ubuntu/workspace)
+[2016-03-02 14:46:24 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Environment: development
+[2016-03-02 14:46:24 +0000 armmaster17-prha-web-1942810 (1107)] INFO : No known dispatcher detected.
+[2016-03-02 14:46:24 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Application: PRHA (Development)
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Installing ActiveRecord 4 instrumentation
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Installing Sinatra instrumentation
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Installing Net instrumentation
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Installing deferred Rack::Builder instrumentation
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Installing Rack::Builder middleware instrumentation
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Finished instrumentation
+[2016-03-02 14:46:25 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Reporting to: https://rpm.newrelic.com/accounts/1216413/applications/11359766
+[2016-03-02 14:46:31 +0000 armmaster17-prha-web-1942810 (1107)] INFO : Doing deferred dependency-detection before Rack startup
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Starting the New Relic agent in "development" environment.
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "development" section of your newrelic.yml.
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Reading configuration from config/newrelic.yml (/home/ubuntu/workspace)
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Environment: development
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : No known dispatcher detected.
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Application: PRHA (Development)
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Installing ActiveRecord 4 instrumentation
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Installing Sinatra instrumentation
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Installing Net instrumentation
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Installing deferred Rack::Builder instrumentation
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Installing Rack::Builder middleware instrumentation
+[2016-03-02 14:49:53 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Finished instrumentation
+[2016-03-02 14:49:54 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Reporting to: https://rpm.newrelic.com/accounts/1216413/applications/11359766
+[2016-03-02 14:49:57 +0000 armmaster17-prha-web-1942810 (1231)] INFO : Doing deferred dependency-detection before Rack startup
