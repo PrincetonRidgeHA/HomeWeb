@@ -19,3 +19,4 @@ gem "sinatra-activerecord"
 gem "pg"
 gem 'newrelic_rpm'
 gem 'activemodel', '~> 4.2.5.1'
+gem 'builder'

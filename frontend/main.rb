@@ -9,6 +9,7 @@ require 'tilt/redcarpet'
 require 'sinatra/activerecord'
 require 'rack-flash'
 require 'newrelic_rpm'
+require 'builder'
 require_relative '../config/environments'
 require_relative 'inc/notifications'
 require_relative 'models/residents.rb'
@@ -526,4 +527,31 @@ get '/raw/protected/residents.csv' do
   attachment('residents.csv')
   item = Residents.all.order(:name)
   response.write(item.as_csv)
+end
+##
+# Returns an XML formatted news feed (no-auth)
+get '/raw/public/rss.xml' do
+  @posts = News.all.order(:uploaddate)
+  builder :rss
+end
+##
+# Version info for API route
+get '/api/v1/version' do
+  "Keylime Core v1.0. Copyright Joshua Zenn 2016 under the GPL v2 License."
+end
+##
+# Returns a paginated list of residents
+get '/api/v1/data/residents/all' do
+  if params['format'] == 'json'
+    content_type :json
+    if params['page'].nil?
+      pagination = Pagination.new(Residents.count, 1)
+    else
+      pagination = Pagination.new(Residents.count, params['page'])
+    end
+    Residents.all.order(:name).limit(10).offset(pagination.get_start_index).to_json
+  end
+end
+get '/api/v1/data/residents/count' do
+  { :count => Residents.count }.to_json
 end
