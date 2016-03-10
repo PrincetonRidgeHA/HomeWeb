@@ -1,6 +1,9 @@
 function generateApiUrl(root) {
-    var page = parse("page");
-    if(page == "Not found") page = "1";
+    var page = parse("pg");
+    if(page == "Not found")
+    {
+        page = "1";
+    }
     var key = getApiKey();
     var result = root + "?page=" + page + "&key=" + key + "&format=json";
     return result;

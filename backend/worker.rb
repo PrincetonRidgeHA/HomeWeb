@@ -11,12 +11,10 @@ require_relative '../frontend/models/yard_winners.rb'
 require_relative '../frontend/models/news.rb'
 
 while(true)
-{
     # Check for items in MQ
     while(true)
-    {
         # Run all tasks in MQ
-    }
+    end
     # Wait five seconds before checking again
     sleep(5);
-}
+end
