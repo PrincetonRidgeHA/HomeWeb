@@ -20,7 +20,7 @@ GEM
       rest-client (~> 1.8)
       simplecov (>= 0.10.0)
     docile (1.1.5)
-    domain_name (0.5.20160216)
+    domain_name (0.5.20160309)
       unf (>= 0.0.5, < 1.0.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -35,7 +35,7 @@ GEM
     pg (0.18.4)
     pony (1.11)
       mail (>= 2.0)
-    puma (3.0.2)
+    puma (3.1.0)
     rack (1.6.4)
     rack-flash3 (1.0.5)
       rack
@@ -80,6 +80,7 @@ PLATFORMS
 DEPENDENCIES
   activemodel (~> 4.2.5.1)
   activerecord (~> 4.2.5.1)
+  builder
   codacy-coverage
   json
   newrelic_rpm
