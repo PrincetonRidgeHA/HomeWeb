@@ -34,5 +34,9 @@
       - @view_data.get_notifications.each do |t|
         javascript:
           pushMessage('#{t.to_s}');
+    javascript:
+      function getApiKey() {
+        return '#{@view_data.get_var('api_key')}';
+      }
   </body>
 </html>

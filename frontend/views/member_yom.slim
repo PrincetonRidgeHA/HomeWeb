@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-sm-12">
           <h1 class="page-header">Yard of the Month Winners</h1>
-          <div class="table-responsive">
+          <div class="table-responsive" ng-app="yomApp" ng-controller="yomController">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -14,20 +14,14 @@
                 </tr>
               </thead>
               <tbody>
-                - @items.each do |item|
-                  <tr>
-                    <td>#{item.month}/#{item.year}</td>
-                    <td>
-                      =item.name
-                    </td>
-                    <td>
-                      =item.address
-                    </td>
-                    <td>
-                      - if item.imgpath != "#"
-                        <a href="#{item.imgpath}">View >></a>
-                    </td>
-                  </tr>
+                <tr ng-repeat="item in yom">
+                  <td>{{item.month}}/{{item.year}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.address}}</td>
+                  <td>
+                    <a href="{{item.imgpath}}">View >></a>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <ul class="pagination">
@@ -41,3 +35,10 @@
         </div>
       </div>
     </div>
+    javascript:
+      var app = angular.module('yomApp', []);
+      app.controller('yomController', function($scope, $http) {
+        $http.get(generateApiUrl("/api/v1/protected/data/yom/all"))
+          .then(function (response) {$scope.yom = response.data;
+        });
+      });

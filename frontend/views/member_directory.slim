@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-sm-12">
           <h1 class="page-header">Resident list</h1>
-          <div class="table-responsive">
+          <div class="table-responsive" ng-app="residentApp" ng-controller="residentController">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -14,20 +14,11 @@
                 </tr>
               </thead>
               <tbody>
-                - @view_data.get_var('items').each do |item|
-                  <tr>
-                    <td>
-                      =item.name
-                    </td>
-                    <td>
-                      =item.addr
-                    </td>
-                    <td>
-                      <a href="mailto:#{item.email}">#{item.email}</a>
-                    </td>
-                    <td>
-                      =item.pnum
-                    </td>
+                  <tr ng-repeat="x in residents">
+                    <td>{{x.name}}</td>
+                    <td>{{x.addr}}</td>
+                    <td><a href="mailto:{{x.email}}">{{x.email}}</a></td>
+                    <td>{{x.pnum}}</td>
                   </tr>
               </tbody>
             </table>
@@ -43,3 +34,10 @@
         </div>
       </div>
     </div>
+    javascript:
+      var app = angular.module('residentApp', []);
+      app.controller('residentController', function($scope, $http) {
+        $http.get(generateApiUrl("/api/v1/protected/data/residents/all"))
+          .then(function (response) {$scope.residents = response.data;
+        });
+      });

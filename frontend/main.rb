@@ -10,6 +10,7 @@ require 'sinatra/activerecord'
 require 'rack-flash'
 require 'newrelic_rpm'
 require 'builder'
+require 'securerandom'
 require_relative '../config/environments'
 require_relative 'inc/notifications'
 require_relative 'models/residents.rb'
@@ -52,6 +53,11 @@ helpers do
     else
       return true
     end
+  end
+  ##
+  # Generates a new session key to use for verifying API calls
+  def gen_api_key!
+    session[:apikey] = SecureRandom.urlsafe_base64(25)
   end
 end
 ##
@@ -167,10 +173,12 @@ get '/secured/members/residents' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Resident Directory', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
-  @view_data.add_js_url('/src/js/member/disclaimer.js')
+  @view_data.add_js_url('/src/js/member/residents/disclaimer.js')
+  @view_data.add_js_url('/src/js/member/datahandler.js')
   @view_data.add_js_url('//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js')
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   @pagination = Pagination.new(Residents.count, params['pg'])
-  @view_data.set_var('items', Residents.all.order(:name).limit(10).offset(@pagination.get_start_index))
   slim :member_directory
 end
 ##
@@ -179,8 +187,10 @@ get '/secured/members/docs' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Documents', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
+  @view_data.add_js_url('/src/js/member/datahandler.js')
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   @pagination = Pagination.new(Docs.count, params['pg'])
-  @items = Docs.all.order(uploaddate: :desc).limit(10).offset(@pagination.get_start_index)
   slim :member_docs
 end
 ##
@@ -189,8 +199,10 @@ get '/secured/members/yom' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Yard of the Month', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
+  @view_data.add_js_url('/src/js/member/datahandler.js')
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   @pagination = Pagination.new(Yardwinners.count, params['pg'])
-  @items = Yardwinners.all.order(:id).limit(10).offset(@pagination.get_start_index)
   slim :member_yom
 end
 ##
@@ -199,7 +211,10 @@ get '/secured/members/contacts' do
   redirect '/login' unless login?
   @view_data = ViewData.new('bootstrap_v3', 'Contacts', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
-  @items = Contacts.all.order(:id)
+  @view_data.add_js_url('/src/js/member/datahandler.js')
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
+  @pagination = Pagination.new(Contacts.count, params['pg'])
   slim :member_contacts
 end
 ##
@@ -247,6 +262,8 @@ get '/admin/dashboard/home' do
   @view_data = ViewData.new('metro_v3', 'Dashboard', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:admin_username]
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   slim :admin_dashboard
 end
 ##
@@ -264,6 +281,8 @@ get '/admin/dashboard/data/yom' do
   @contactscount = Contacts.count
   # Page specific data
   @items = Yardwinners.all.order(:id)
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   slim :admin_data_yom
 end
 ##
@@ -319,6 +338,8 @@ get '/admin/dashboard/data/rd' do
   @contactscount = Contacts.count
   # Page specific data
   @items = Residents.all.order(:name)
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   slim :admin_data_rd
 end
 ##
@@ -373,6 +394,8 @@ get '/admin/dashboard/data/docs' do
   @contactscount = Contacts.count
   # Page specific data
   @items = Docs.all
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   slim :admin_data_docs
 end
 ##
@@ -427,6 +450,8 @@ get '/admin/dashboard/data/news' do
   @contactscount = Contacts.count
   # Page specific data
   @items = News.all.order(:id)
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   slim :admin_data_news
 end
 ##
@@ -481,6 +506,8 @@ get '/admin/dashboard/data/contacts' do
   @contactscount = Contacts.count
   # Page specific data
   @items = Contacts.all.order(:id)
+  gen_api_key!
+  @view_data.set_var('api_key', session[:apikey])
   slim :admin_data_contacts
 end
 ##
@@ -536,12 +563,13 @@ get '/raw/public/rss.xml' do
 end
 ##
 # Version info for API route
-get '/api/v1/version' do
+get '/api/v1/public/version' do
   "Keylime Core v1.0. Copyright Joshua Zenn 2016 under the GPL v2 License."
 end
 ##
 # Returns a paginated list of residents
-get '/api/v1/data/residents/all' do
+get '/api/v1/protected/data/residents/all' do
+  return "Invalid key" unless session[:apikey] == params['key']
   if params['format'] == 'json'
     content_type :json
     if params['page'].nil?
@@ -552,6 +580,69 @@ get '/api/v1/data/residents/all' do
     Residents.all.order(:name).limit(10).offset(pagination.get_start_index).to_json
   end
 end
-get '/api/v1/data/residents/count' do
+##
+# Gets the number of residents in the database
+get '/api/v1/protected/data/residents/count' do
+  return "401" unless session[:apikey] == params['key']
   { :count => Residents.count }.to_json
+end
+##
+# Returns a paginated list of documents
+get '/api/v1/protected/data/docs/all' do
+  return "Invalid key" unless session[:apikey] == params['key']
+  if params['format'] == 'json'
+    content_type :json
+    if params['page'].nil?
+      pagination = Pagination.new(Docs.count, 1)
+    else
+      pagination = Pagination.new(Docs.count, params['page'])
+    end
+    Docs.all.order(:uploaddate).limit(10).offset(pagination.get_start_index).to_json
+  end
+end
+##
+# Gets the number of documents in the database
+get '/api/v1/protected/data/docs/count' do
+  return "401" unless session[:apikey] == params['key']
+  { :count => Docs.count }.to_json
+end
+##
+# Returns a paginated list of YOM winners
+get '/api/v1/protected/data/yom/all' do
+  return "Invalid key" unless session[:apikey] == params['key']
+  if params['format'] == 'json'
+    content_type :json
+    if params['page'].nil?
+      pagination = Pagination.new(Yardwinners.count, 1)
+    else
+      pagination = Pagination.new(Yardwinners.count, params['page'])
+    end
+    Yardwinners.all.order(:id).limit(10).offset(pagination.get_start_index).to_json
+  end
+end
+##
+# Gets the number of YOM winners in the database
+get '/api/v1/protected/data/yom/count' do
+  return "401" unless session[:apikey] == params['key']
+  { :count => Yardwinners.count }.to_json
+end
+##
+# Returns a paginated list of contacts
+get '/api/v1/protected/data/contacts/all' do
+  return "Invalid key" unless session[:apikey] == params['key']
+  if params['format'] == 'json'
+    content_type :json
+    if params['page'].nil?
+      pagination = Pagination.new(Contacts.count, 1)
+    else
+      pagination = Pagination.new(Contacts.count, params['page'])
+    end
+    Contacts.all.order(:id).limit(10).offset(pagination.get_start_index).to_json
+  end
+end
+##
+# Gets the number of contacts in the database
+get '/api/v1/protected/data/contacts/count' do
+  return "401" unless session[:apikey] == params['key']
+  { :count => Contacts.count }.to_json
 end
