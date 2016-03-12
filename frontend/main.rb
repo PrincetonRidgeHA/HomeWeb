@@ -646,3 +646,9 @@ get '/api/v1/protected/data/contacts/count' do
   return "401" unless session[:apikey] == params['key']
   { :count => Contacts.count }.to_json
 end
+##
+# Catch-all 404 error handler
+not_found do
+  @view_data = ViewData.new('bootstrap_v3', 'Page Not Found', flash[:notice])
+  slim :error_404
+end
