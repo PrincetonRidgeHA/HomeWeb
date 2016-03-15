@@ -693,7 +693,7 @@ get '/board/home' do
   'You are logged in as ' + session[:sso_auth_username]
 end
 get '/board/email' do
-  redirect '/login/sso?redir=/board/home' unless ssologin?
+  redirect '/login/sso?redir=/board/email' unless ssologin?
   @view_data = ViewData.new('metro_v3', 'Email', flash[:notice])
   @view_data.add_css_url('/src/css/admin/dashboard.css')
   @admin_uname = session[:sso_auth_username]
@@ -701,8 +701,8 @@ get '/board/email' do
 end
 post '/board/email' do
   data = Hash.new
-  data.push("to", params["to"])
-  data.push("content", params["content"])
+  data['to'] = params["to"]
+  data['content'] = params["content"]
   ej = ExternalJob.new("send_email", data)
   ej.push
   redirect "/board/email"
