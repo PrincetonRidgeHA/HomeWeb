@@ -12,6 +12,7 @@ gem 'slim'
 gem 'pony'
 gem 'rest-client'
 gem 'json'
+gem 'bunny'
 gem "rack-test"
 gem 'codacy-coverage', group: :test, require: nil
 gem "activerecord", "~> 4.2.5.1"

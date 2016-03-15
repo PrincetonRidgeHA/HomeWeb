@@ -2,12 +2,17 @@
 require 'rubygems'
 require 'rest-client'
 require 'json'
+require 'bunny'
 
-while(true)
-    # Check for items in Redis
-    while(true)
-        # Run all tasks in MQ
-    end
-    # Wait sixty seconds before checking again
-    sleep(60);
+conn = Bunny.new(ENV['RABBITMQ_BIGWIG_RX_URL'])
+conn.start
+
+ch = conn.create_channel
+q  = ch.queue("prha.outbound")
+
+q.subscribe do |delivery_info, metadata, payload|
+  puts "Received #{payload}"
+end
+while true
+
 end

@@ -23,6 +23,7 @@ require_relative 'inc/mailer'
 require_relative 'inc/dateservice'
 require_relative 'inc/viewdata'
 require_relative 'inc/pagination'
+require_relative 'inc/externaljob'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
@@ -37,10 +38,10 @@ helpers do
   def login?
     if ENV['CI']
       return true
-    elsif session[:authusr].nil?
-      return false
-    else
+    elsif !session[:authusr].nil? || !session[:sso_auth].nil?
       return true
+    else
+      return false
     end
   end
   ##
@@ -49,6 +50,17 @@ helpers do
     if ENV['CI'] || ENV['RACK_ENV'] == 'development'
       return true
     elsif session[:adminauth].nil?
+      return false
+    else
+      return true
+    end
+  end
+  ##
+  # Defines if current user is logged in as an SSO-based account
+  def ssologin?
+    if ENV['CI']
+      return true
+    elsif session[:sso_auth].nil?
       return false
     else
       return true
@@ -645,6 +657,54 @@ end
 get '/api/v1/protected/data/contacts/count' do
   return "401" unless session[:apikey] == params['key']
   { :count => Contacts.count }.to_json
+end
+##
+# Gets the login page for SSO-based accounts
+get '/login/sso' do
+  if ssologin?
+    redirect params['redir']
+  end
+  @view_data = ViewData.new('metro_v3', 'SSO Login', flash[:notice])
+  @view_data.add_css_url('/src/css/admin/login.css')
+  slim :sso_login
+end
+##
+# Handle authenticication for SSO-based accounts
+post '/login/sso' do
+  # TODO: Replace with actual test of credentials against database of SSO users
+  if params['password'] == 'ssotest'
+    session[:sso_auth] = true
+    session[:sso_auth_username] = params['username']
+    redirect params['redir']
+  else
+    redirect '/login/sso'
+  end
+end
+##
+# Logs the current SSO-based user out
+get '/logout/sso' do
+  session[:sso_auth] = nil
+  redirect '/'
+end
+##
+# Gets the home page for the Board Members area
+get '/board/home' do
+  redirect '/login/sso?redir=/board/home' unless ssologin?
+  'You are logged in as ' + session[:sso_auth_username]
+end
+get '/board/email' do
+  redirect '/login/sso?redir=/board/home' unless ssologin?
+  @view_data = ViewData.new('metro_v3', 'Email', flash[:notice])
+  @view_data.add_css_url('/src/css/admin/dashboard.css')
+  @admin_uname = session[:sso_auth_username]
+  slim :board_action_email
+end
+post '/board/email' do
+  data = Hash.new
+  data.push("to", params["to"])
+  data.push("content", params["content"])
+  ej = ExternalJob.new("send_email", data)
+  ej.push
 end
 ##
 # Catch-all 404 error handler
