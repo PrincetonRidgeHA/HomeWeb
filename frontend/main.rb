@@ -705,6 +705,7 @@ post '/board/email' do
   data.push("content", params["content"])
   ej = ExternalJob.new("send_email", data)
   ej.push
+  redirect "/board/email"
 end
 ##
 # Catch-all 404 error handler
