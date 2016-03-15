@@ -1,7 +1,7 @@
 require 'json'
 require 'bunny'
 
-module Mailer
+module ExternalJob
     @task_name = ""
     @data = ""
     
