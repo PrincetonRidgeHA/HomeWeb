@@ -1,13 +1,13 @@
 require 'json'
 require 'bunny'
 
-module ExternalJob
+class ExternalJob
     @task_name = ""
     @data = ""
     
     ##
     # Queues a job to be completed outside of the current thread.
-    def initialize(task, data, queue)
+    def initialize(task, data)
         @task_name = task
         @data = data
     end
