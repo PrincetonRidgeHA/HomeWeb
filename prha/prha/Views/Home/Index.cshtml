@@ -1,31 +1,135 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<style>
+    html,
+    body {
+      height: 100%;
+      background-color: #333;
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    body {
+      color: #000;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+    }
+    .btn {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      background: rgba(0,0,0,0);
+      color: #fff;
+    }
+    .btn:hover {
+      color: #fff;
+      background: #000;
+      transform: scale(1.1);
+    }
+    .page {
+      height: 100%;
+      width: 100%;
+    }
+    #content1 {
+      /*background: #333 url('https://pbs.twimg.com/profile_images/556488484781694976/pLNGBiS4.png') no-repeat center center fixed;*/
+      padding: 15px;
+    }
+    #content2 {
+      background: #fff;
+      height: auto;
+      padding: 15px;
+    }
+    #content3 {
+      background: #555;
+      padding: 15px;
+    }
+    #content4 {
+      background: #666;
+      text-align: left;
+      height: 95%;
+      padding: 15px;
+    }
+    #footer {
+      height: 5%;
+    }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"></a>
+            @Html.ActionLink("Princeton Ridge", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Contact", "Index", "Home")</li>
+                <li>@Html.ActionLink("Members Area", "Index", "Home")</li>
+                <li>@Html.ActionLink("News", "Index", "Home")</li>
+                <li>@Html.ActionLink("Realtors", "Index", "Home")</li>
+            </ul>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</nav>
+<!-- Start content -->
+<!-- First panel -->
+<a name="home"></a>
+<div class="container page" id="content1">
+    <br><br><br><br>
+    <h1>Princeton Ridge Homeowners Association</h1>
+    <hr style="width: 45%">
+    <p>Where the best neighbors live!</p>
+</div>
+<a name="home"></a>
+<div class="container page" id="content2">
+    <div class="container marketing">
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <div class="col-lg-4">
+                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                <h2>Heading</h2>
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                <h2>Heading</h2>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                <h2>Heading</h2>
+                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</div>
+<a name="home"></a>
+<div class="container page" id="content3">
+    <br><br><br><br><br>
+    <p>Test content</p>
+</div>
+<a name="home"></a>
+<div class="container page" id="content4">
+    <h2>Contact</h2>
+    <div class="container">
+        <div class="row col-md-9">
+
+        </div>
+        <div class="row col-md-3">
+            <a class="btn btn-default" href="/"><span class="mif-github"></span> GitHub</a>
+            <br>
+            <a class="btn btn-default" href="/"><span class="mif-linkedin"></span> LinkedIn</a>
+            <br>
+            <a class="btn btn-default" href="/"><span class="mif-fire"></span> freeCodeCamp</a>
+        </div>
     </div>
+</div>
+<div class="container page" id="footer">
+    <p>Copyright 2016 Joshua Zenn - Made with Bootstrap</p>
 </div>
