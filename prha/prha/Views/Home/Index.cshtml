@@ -3,6 +3,18 @@
 }
 
 <style>
+    .gi-2x{font-size: 2em;}
+    .gi-3x{font-size: 3em;}
+    .gi-4x{font-size: 4em;}
+    .gi-5x{font-size: 5em;}
+    .gi-6x{font-size: 6em;}
+    .gi-7x{font-size: 7em;}
+    .gi-8x{font-size: 8em;}
+    .gi-9x{font-size: 9em;}
+    .gi-10x{font-size: 10em;}
+
+    .gi-holder{text-align:center;}
+    
     html,
     body {
       height: 100%;
@@ -17,11 +29,11 @@
     .btn {
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       background: rgba(0,0,0,0);
-      color: #fff;
+      color: #000;
     }
     .btn:hover {
       color: #fff;
-      background: #000;
+      background: #096c17;
       transform: scale(1.1);
     }
     .page {
@@ -29,23 +41,30 @@
       width: 100%;
     }
     #content1 {
-      /*background: #333 url('https://pbs.twimg.com/profile_images/556488484781694976/pLNGBiS4.png') no-repeat center center fixed;*/
+      background: #333 url('/Content/homepage1.JPG') no-repeat center center fixed;
       padding: 15px;
+    }
+    #content1 h1 {
+        margin-top: 20%;
+    }
+    #content1 h1, #content1 p {
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
     }
     #content2 {
-      background: #fff;
       height: auto;
       padding: 15px;
+      background: #fff;
     }
     #content3 {
-      background: #555;
       padding: 15px;
+      background: #333 url('/Content/homepage2.jpg') no-repeat center center fixed;
     }
     #content4 {
       background: #666;
       text-align: left;
       height: 95%;
       padding: 15px;
+      background: #333 url('/Content/homepage3.jpg') no-repeat center center fixed;
     }
     #footer {
       height: 5%;
@@ -78,34 +97,35 @@
 <!-- First panel -->
 <a name="home"></a>
 <div class="container page" id="content1">
-    <br><br><br><br>
-    <h1>Princeton Ridge Homeowners Association</h1>
+    <h1 style="color: #fff">Princeton Ridge Homeowners Association</h1>
     <hr style="width: 45%">
-    <p>Where the best neighbors live!</p>
+    <p style="color: #fff">Where the best neighbors live!</p>
 </div>
 <a name="home"></a>
 <div class="container page" id="content2">
     <div class="container marketing">
         <!-- Three columns of text below the carousel -->
         <div class="row">
+            <div class="col-lg-4 gi-holder">
+                <p><span class="glyphicon glyphicon-home gi-10x"></span></p>
+                <h2>Learn more</h2>
+                <p>Princeton Ridge has lots to offer to its residents and the surrounding community. Scroll down to read more.</p>
+                <p><a class="btn btn-default" href="#feature-start" role="button">Read more &raquo;</a></p>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4 gi-holder">
+                <p><span class="glyphicon glyphicon-dashboard gi-10x"></span></p>
+                <h2>Already a resident?</h2>
+                <p>You can find the Resident Directory, Yard of the Month, and important ACC documents in the new Members Area.</p>
+                <p><a class="btn btn-default" href="/members/yom" role="button">Take me there &raquo;</a></p>
+            </div>
+            <!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Heading</h2>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
+                <p><span class="glyphicon glyphicon-fast-backward gi-10x"></span></p>
+                <h2>Are you a realtor or looking to move in?</h2>
+                <p>Take a look at our realtor's page which contains important documents such as sample assesment forms and contact information.</p>
+                <p><a class="btn btn-default" href="http://72.167.232.185/index2.htm" role="button">Visit old site &raquo;</a></p>
+            </div>
         </div><!-- /.row -->
     </div>
 </div>
