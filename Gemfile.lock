@@ -35,7 +35,7 @@ GEM
     mime-types-data (3.2016.0521)
     minitest (5.9.0)
     netrc (0.11.0)
-    newrelic_rpm (3.16.1.320)
+    newrelic_rpm (3.16.2.321)
     pg (0.18.4)
     pony (1.11)
       mail (>= 2.0)
