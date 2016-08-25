@@ -19,7 +19,7 @@ GEM
     builder (3.2.2)
     bunny (2.5.1)
       amq-protocol (>= 2.0.1)
-    codacy-coverage (1.0.0)
+    codacy-coverage (1.1.0)
       simplecov (>= 0.10.0)
     docile (1.1.5)
     domain_name (0.5.20160615)
