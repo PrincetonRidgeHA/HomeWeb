@@ -39,7 +39,7 @@ GEM
     pg (0.20.0)
     pony (1.11)
       mail (>= 2.0)
-    puma (3.8.1)
+    puma (3.8.2)
     rack (1.6.5)
     rack-flash3 (1.0.5)
       rack
@@ -53,7 +53,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    simplecov (0.13.0)
+    simplecov (0.14.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
